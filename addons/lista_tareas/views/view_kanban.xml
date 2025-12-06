@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista Kanban para la lista de tareas -->
+    <record id="lista_tareas_kanban_view" model="ir.ui.view">
+        <field name="name">lista_tarea.kanban.view</field>
+        <field name="model">lista_tareas.lista_tareas</field>
+        <field name="arch" type="xml">
+            <!-- Campos necesarios agrupados por "estado" que es lo que hace más ágil el estilo kanban-->
+            <kanban default_group_by="realizada">
+                <field name="tarea"/>
+                <field name="categoria"/>
+                <field name="prioridad"/>
+                <field name="urgente"/>
+                <field name="realizada"/>
+                
+                <!-- Vista de cada tarjeta en la vista Kanban -->
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <!-- Nombre de la tarea -->
+                            <strong><field name="tarea"/></strong>
+                            <div>
+                                <!-- Mostrar la etapa (estado) de la tarea -->
+                                <span>Prioridad: <field name="prioridad" /></span><br/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>

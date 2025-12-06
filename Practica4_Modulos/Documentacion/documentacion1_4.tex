@@ -16,14 +16,23 @@
 \usepackage{hyperref}
 \geometry{margin=2.5cm}
 
-\lstset{
-    backgroundcolor=\color{gray!10},
-    basicstyle=\ttfamily\small,
+\lstdefinestyle{javascript}{
+    language=Java,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
     breaklines=true,
     frame=single,
-    language=Python
+    showspaces=false,
+    showstringspaces=false,
+    tabsize=2,
+    upquote=true,
+    columns=fixed,
+    basewidth=0.5em
 }
-
 \title{Práctica 4: Módulos Odoo Modelo y Vista.}
 \author{Andrea Sofía Pais Dos Santos}
 \date{\today}
@@ -77,7 +86,99 @@ El objetivo de la práctica es crear y modificar módulos para seguir adquiriend
 
 
 \section{Actividad 01 - Lista Tareas}
+El objetivo de la primera actividad es modificar el módulo que creamos en la anterior práctica añadiéndole dos vistas nuevas. La primera una vista Kanban y la segunda una vista que visualiza un Calendario.
+
+\begin{itemize}
+    \item Nueva vista en formato Kanban 
+    \begin{itemize}
+        \item Creamos un nuevo archivo xml "view kanban" que va a tener la siguiente estructura pero un nivel básico para ir entendiendo poco a poco:
+        \begin{lstlisting}[style=javascript]
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista Kanban para la lista de tareas -->
+    <record id="lista_tareas_kanban_view" model="ir.ui.view">
+        <field name="name">lista_tarea.kanban.view</field>
+        <field name="model">lista_tareas.lista_tareas</field>
+        <field name="arch" type="xml">
+            <!-- Campos necesarios agrupados por el estado que es lo que hace mas agil el estilo kanban-->
+            <kanban default_group_by="realizada">
+                <field name="tarea"/>
+                <field name="categoria"/>
+                <field name="prioridad"/>
+                <field name="urgente"/>
+                <field name="realizada"/>
+                
+                <!-- Vista de cada tarjeta en la vista Kanban -->
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <!-- Nombre de la tarea -->
+                            <strong><field name="tarea"/></strong>
+                            <div>
+                                <!-- Mostrar la etapa (estado) de la tarea -->
+                                <span>Prioridad: <field name="prioridad" /></span><br/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>
+    \end{lstlisting}
+    \item Ponemos los campos que tenemos en el modelo del módulo, luego vamos a tener que añadir el del tiempo para el calendario. 
+    \item Necesitamos que se vea en otra vista por lo que en la vista principal tenemos que añadir a las acciones kanban.
+\begin{lstlisting}[style=javascript]
+<field name="view_mode">list,form,kanban</field>
+\end{lstlisting}    
+    \item Para que el modelo tenga en cuenta al la vista que creamos tenemos que añadir la vista al archivo manifest.
+\begin{lstlisting}[style=javascript]
+# -*- coding: utf-8 -*-
+{
+    'name': "Lista de tareas",
+    'summary': """Sencilla Lista de tareas""",
+    'description': """Sencilla lista de tareas utilizadas para crear un nuevo modulo con un nuevo modelo de datos""",
+    'author': "Andrea Sofia Pais Dos Santos",
+    'application': True,
+    'category': 'Productivity',
+    'version': '0.1',
+    'depends': ['base'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/views.xml',
+        'views/view_kanban.xml' -*- hay que poner las vistas que vamos creando -*-
+    ],
+}
+\end{lstlisting} 
+    \item Al realizar los cambios lo que tenemos que hacer es actualizar la aplicación que habíamos creado en la otra práctica. Al entrar a la aplicación vemos la vista que principal y ahora vemos una que hay una nueva vista que nos enseña las tareas en formato tarjeta. Las podríamos hacer más bonitas con css, este sería el estilo básico de kanban. Se dividen en dos columnas los que están realizadas y las que no.
+    \vspace{0.5cm}
+
+    \includegraphics[height=2.3cm]{images/modulo1.png}
+    \end{itemize}
+    \item Vista visualización "Calendario" según fecha
+    \begin{itemize}
+        \item Hay que seguir más o menos los mismos pasos que para hacer la vista kanban. Creamos un archivo para el Calendario, pero lo primero es añadir un atributo nuevo a la vista principal que va a ser la fecha asignada.
+    \end{itemize}
+    \item Errores encontrados
+    \begin{itemize}
+        \item Tuve un error que no me dejaba actualizar la aplicación de la lista de tareas y era porque me faltaba añadir la lista al manifest.
+    \end{itemize}
+\end{itemize}
 
 
+
+
+
+\section{Actividad 02 -  Biblioteca de Cómics}
+El objetivo de la primera actividad 
+
+
+
+\section{Actividad 03 -  }
+El objetivo de la primera actividad 
+
+
+\section{Actividad 04 -  }
+El objetivo de la primera actividad 
 
 \end{document}

@@ -41,7 +41,7 @@
     <record model="ir.actions.act_window" id="lista_tareas.action_window">
       <field name="name">Listado de tareas pendientes</field>
       <field name="res_model">lista_tareas.lista_tareas</field>
-      <field name="view_mode">list,form</field>
+      <field name="view_mode">list,form,kanban</field>
     </record>
     <!-- Top menu item -->
     <menuitem name="Listado de tareas" id="lista_tareas.menu_root"/>
