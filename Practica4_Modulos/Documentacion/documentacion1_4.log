@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.26)  6 DEC 2025 23:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.26)  7 DEC 2025 02:14
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -362,10 +362,10 @@ File: lstlang1.sty 2024/09/23 1.10c listings language file
 <images/modulo1.png, id=87, 1444.64719pt x 228.855pt>
 File: images/modulo1.png Graphic file (type png)
 <use images/modulo1.png>
-Package pdftex.def Info: images/modulo1.png  used on input line 156.
+Package pdftex.def Info: images/modulo1.png  used on input line 162.
 (pdftex.def)             Requested size: 413.09543pt x 65.44142pt.
 
-Overfull \hbox (13.0757pt too wide) in paragraph at lines 156--157
+Overfull \hbox (13.0757pt too wide) in paragraph at lines 162--163
 [][] 
  []
 
@@ -373,7 +373,46 @@ Overfull \hbox (13.0757pt too wide) in paragraph at lines 156--157
 
 [4 <./images/modulo1.png>]
 
-[5] (documentacion1_4.aux)
+[5]
+<images/calendario3.png, id=172, 849.92531pt x 232.61906pt>
+File: images/calendario3.png Graphic file (type png)
+<use images/calendario3.png>
+Package pdftex.def Info: images/calendario3.png  used on input line 280.
+(pdftex.def)             Requested size: 415.83157pt x 113.81102pt.
+
+Overfull \hbox (15.81184pt too wide) in paragraph at lines 280--281
+[][] 
+ []
+
+
+
+[6]
+<images/calendario1.png, id=218, 558.58687pt x 569.87906pt>
+File: images/calendario1.png Graphic file (type png)
+<use images/calendario1.png>
+Package pdftex.def Info: images/calendario1.png  used on input line 285.
+(pdftex.def)             Requested size: 278.88362pt x 284.52756pt.
+<images/calendario2.png, id=219, 1329.46687pt x 602.25pt>
+File: images/calendario2.png Graphic file (type png)
+<use images/calendario2.png>
+Package pdftex.def Info: images/calendario2.png  used on input line 290.
+(pdftex.def)             Requested size: 376.85312pt x 170.71652pt.
+
+
+[7 <./images/calendario3.png> <./images/calendario1.png> <./images/calendario2.png>]
+<images/error1.png, id=228, 883.80188pt x 552.56438pt>
+File: images/error1.png Graphic file (type png)
+<use images/error1.png>
+Package pdftex.def Info: images/error1.png  used on input line 300.
+(pdftex.def)             Requested size: 409.5746pt x 256.0748pt.
+
+Overfull \hbox (9.55487pt too wide) in paragraph at lines 300--301
+[][] 
+ []
+
+
+
+[8 <./images/error1.png>] (documentacion1_4.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-09-02>
@@ -382,17 +421,17 @@ Package rerunfilecheck Info: File `documentacion1_4.out' has not changed.
 (rerunfilecheck)             Checksum: 37F9DF0BE8F83B98E94A7FFD23BEA3EA;862.
  ) 
 Here is how much of TeX's memory you used:
- 12497 strings out of 468130
- 191681 string characters out of 5430633
- 1013847 words of memory out of 5000000
- 40917 multiletter control sequences out of 15000+600000
+ 12694 strings out of 468130
+ 194643 string characters out of 5430633
+ 1147842 words of memory out of 5000000
+ 41016 multiletter control sequences out of 15000+600000
  635450 words of font info for 56 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,7n,79p,676b,1428s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 69i,7n,79p,676b,2212s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tctt1000.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1000.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0600.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk>
-Output written on documentacion1_4.pdf (5 pages, 111381 bytes).
+Output written on documentacion1_4.pdf (8 pages, 233751 bytes).
 PDF statistics:
- 376 PDF objects out of 1000 (max. 8388607)
- 70 named destinations out of 1000 (max. 500000)
- 54 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 523 PDF objects out of 1000 (max. 8388607)
+ 168 named destinations out of 1000 (max. 500000)
+ 74 words of extra memory for PDF output out of 10000 (max. 10000000)
 

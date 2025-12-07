@@ -11,6 +11,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',
-        'views/view_kanban.xml'
+        'views/view_kanban.xml',  # -*- hay que poner las vistas que vamos creando -*-
+        'views/view_calendario.xml' # -*- y ahora la vista para el calendario -*-
     ],
 }

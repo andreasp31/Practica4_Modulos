@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="lista_tareas_calendar_view" model="ir.ui.view">
+        <field name="name">lista_tareas.calendar.view</field>
+        <field name="model">lista_tareas</field>
+        <field name="arch" type="xml">
+            <!-- Estructura de la vista calendario-->
+            <calendar string="Calendario de Tareas"
+                      date_start="date_deadline" 
+                      date_stop="date_deadline"
+                      color="categoria"
+                      mode="month">
+                <!-- Campos que se muestran -->
+                <field name="tarea"/>
+                <field name="prioridad"/>
+                <field name="date_deadline"/>
+            </calendar>
+        </field>
+    </record>
+</odoo>

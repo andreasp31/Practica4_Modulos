@@ -92,6 +92,8 @@ El objetivo de la primera actividad es modificar el módulo que creamos en la an
     \item Nueva vista en formato Kanban 
     \begin{itemize}
         \item Creamos un nuevo archivo xml "view kanban" que va a tener la siguiente estructura pero un nivel básico para ir entendiendo poco a poco:
+        
+        \vspace{0.5cm}
         \begin{lstlisting}[style=javascript]
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
@@ -128,10 +130,14 @@ El objetivo de la primera actividad es modificar el módulo que creamos en la an
     \end{lstlisting}
     \item Ponemos los campos que tenemos en el modelo del módulo, luego vamos a tener que añadir el del tiempo para el calendario. 
     \item Necesitamos que se vea en otra vista por lo que en la vista principal tenemos que añadir a las acciones kanban.
+
+\vspace{0.5cm}
 \begin{lstlisting}[style=javascript]
 <field name="view_mode">list,form,kanban</field>
 \end{lstlisting}    
     \item Para que el modelo tenga en cuenta al la vista que creamos tenemos que añadir la vista al archivo manifest.
+
+\vspace{0.5cm}
 \begin{lstlisting}[style=javascript]
 # -*- coding: utf-8 -*-
 {
@@ -146,7 +152,7 @@ El objetivo de la primera actividad es modificar el módulo que creamos en la an
     'data': [
         'security/ir.model.access.csv',
         'views/views.xml',
-        'views/view_kanban.xml' -*- hay que poner las vistas que vamos creando -*-
+        'views/view_kanban.xml' # -*- hay que poner las vistas que vamos creando -*-
     ],
 }
 \end{lstlisting} 
@@ -155,20 +161,147 @@ El objetivo de la primera actividad es modificar el módulo que creamos en la an
 
     \includegraphics[height=2.3cm]{images/modulo1.png}
     \end{itemize}
+    \vspace{0.5cm}
+
     \item Vista visualización "Calendario" según fecha
     \begin{itemize}
         \item Hay que seguir más o menos los mismos pasos que para hacer la vista kanban. Creamos un archivo para el Calendario, pero lo primero es añadir un atributo nuevo a la vista principal que va a ser la fecha asignada.
+        \item En el archivo models vamos a añadir el campo fecha asignada de las tareas que se va a crear.
+
+\vspace{0.8cm}
+\begin{lstlisting}[style=javascript]
+from odoo import models, fields, api
+#Definimos el modelo de datos
+class lista_tareas(models.Model):
+#Nombre y descripcion del modelo de datos
+    _name = 'lista_tareas'
+    _description = 'lista_tareas'
+    #Elementos de cada fila del modelo de datos
+    #Los tipos de datos a usar en el ORM son
+    tarea = fields.Char(string="Tarea")
+    prioridad = fields.Integer(string="Prioridad")
+    urgente = fields.Boolean(compute="_value_urgente", store=True)
+    realizada = fields.Boolean(string="Realizada")
+    categoria = fields.Selection([
+        ("estudio","Estudio"),
+        ("trabajo","Trabajo"),
+        ("ocio","Ocio"),
+        ("cita","Citas")
+    ],string="Categoria",default="cita")
+    date_deadline= fields.Date(string="Fecha",default=fields.Date.today) # Ponemos el campo fecha que necesitamos para el calendario
+    @api.depends('prioridad')
+    def _value_urgente(self):
+    #Para cada registro
+        for record in self:
+        #Si la prioridad es mayor que 10, se considera urgente, en otro caso no lo es
+            if record.prioridad>10:
+                record.urgente = True
+            else:
+                record.urgente = False
+\end{lstlisting} 
+    \item Luego en la vista principal añadimos el atributo fecha asignada.
+\begin{lstlisting}[style=javascript]
+# ... trozo del archivo
+<record model="ir.ui.view" id="lista_tareas_form">
+      <field name="name">lista_tareas_form</field>
+      <field name="model">lista_tareas</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group string="La informacion principal">
+                <field name="tarea" required="1"/>
+                <field name="categoria"/>
+                <field name="prioridad"/>
+                <field name="date_deadline/> #Ponemos el atributo fecha nuevo
+              </group>
+              <group string="Estado">
+                <field name="realizada"/>
+                <field name="urgente"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+...
+\end{lstlisting}     
+        \item Ahora en el archivo que creamos para la vista Calendario vamos a tener la siguiente estructura:
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="lista_tareas_calendar_view" model="ir.ui.view">
+        <field name="name">lista_tareas.calendar.view</field>
+        <field name="model">lista_tareas</field>
+        <field name="arch" type="xml">
+            <!-- Estructura de la vista calendario-->
+            <calendar string="Calendario de Tareas"
+                      date_start="date_deadline" 
+                      date_stop="date_deadline"
+                      color="categoria"
+                      mode="month">
+                <!-- Campos que se muestran -->
+                <field name="tarea"/>
+                <field name="prioridad"/>
+                <field name="date_deadline"/>
+            </calendar>
+        </field>
+    </record>
+</odoo>
+\end{lstlisting} 
+        \item En el manifest hay que añadir la vista Calendario.
+\begin{lstlisting}[style=javascript]
+# -*- coding: utf-8 -*-
+{
+    'name': "Lista de tareas",
+    'summary': """Sencilla Lista de tareas""",
+    'description': """Sencilla lista de tareas utilizadas para crear un nuevo modulo con un nuevo modelo de datos""",
+    'author': "Andrea Sofia Pais Dos Santos",
+    'application': True,
+    'category': 'Productivity',
+    'version': '0.1',
+    'depends': ['base'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/views.xml',
+        'views/view_kanban.xml',  # -*- hay que poner las vistas que vamos creando -*-
+        'views/view_calendario.xml' # -*- y ahora la vista para el calendario -*-
+    ],
+}
+\end{lstlisting} 
+        \item Necesitamos que se vea en otra vista por lo que en la vista principal tenemos que añadir a las acciones el calendario.
+\begin{lstlisting}[style=javascript]
+<field name="view_mode">list,form,kanban,calendar</field>
+\end{lstlisting}    
+        \item Al tener todos los archivos bien, actualizamos el módulo vemos que tenemos una nueva vista que nos abre a un calendario mensual que almacena las tareas que vamos añadiendo.
+        
+        \includegraphics[height=4cm]{images/calendario3.png}
+
+        \item Por ejemplo, vamos a crear una nueva tarea y ahora nos da la opción de seleccionar una fecha en la que ocurrirá la tarea.
+        
+        \begin{center}
+            \includegraphics[height=10cm]{images/calendario1.png}
+        \end{center}
+
+        \item Ahora, accedemos al calendario y vemos las tareas 
+        \begin{center}
+            \includegraphics[height=6cm]{images/calendario2.png}
+        \end{center}
+        \vspace{1.2cm}
+        
     \end{itemize}
     \item Errores encontrados
     \begin{itemize}
         \item Tuve un error que no me dejaba actualizar la aplicación de la lista de tareas y era porque me faltaba añadir la lista al manifest.
+        \item Un error que tuve al actualizar la aplicación me detectó un error en el nombre del módulo. En esta versión de Odoo, el nombre del modelo debe de ser simplemente el nombre del módulo, no duplicado. Y lo tuve que cambiar en todos los archivos.
+        
+        \includegraphics[height=9cm]{images/error1.png}
     \end{itemize}
 \end{itemize}
 
-
-
-
-
+\vspace{1cm}
 \section{Actividad 02 -  Biblioteca de Cómics}
 El objetivo de la primera actividad 
 

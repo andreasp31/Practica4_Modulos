@@ -3,7 +3,7 @@
     <!-- Vista Kanban para la lista de tareas -->
     <record id="lista_tareas_kanban_view" model="ir.ui.view">
         <field name="name">lista_tarea.kanban.view</field>
-        <field name="model">lista_tareas.lista_tareas</field>
+        <field name="model">lista_tareas</field>
         <field name="arch" type="xml">
             <!-- Campos necesarios agrupados por "estado" que es lo que hace más ágil el estilo kanban-->
             <kanban default_group_by="realizada">
