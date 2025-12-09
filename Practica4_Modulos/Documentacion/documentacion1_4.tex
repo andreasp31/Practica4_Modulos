@@ -56,12 +56,13 @@
     \item Vista visualización "Calendario" según fecha
     \item Errores encontrados
     \end{itemize}
-    \item Actividad 02 -  Biblioteca de Cómics .................................................. página 4
+    \item Actividad 02 -  Biblioteca de Cómics .................................................. página 8
     \begin{itemize}
     \item Gestionar socios y atributos
+    \subitem Errores encontrados
     \item Nuevo modelo para gestionar ejemplares
     \item Restricciones
-    \item Errores encontrados 
+    \subitem Errores encontrados
     \end{itemize}
     \item Actividad 03 ....................................................................................... página 4
     \begin{itemize}
@@ -88,8 +89,8 @@ El objetivo de la práctica es crear y modificar módulos para seguir adquiriend
 \section{Actividad 01 - Lista Tareas}
 El objetivo de la primera actividad es modificar el módulo que creamos en la anterior práctica añadiéndole dos vistas nuevas. La primera una vista Kanban y la segunda una vista que visualiza un Calendario.
 
-\begin{itemize}
-    \item Nueva vista en formato Kanban 
+
+\subsection{Nueva vista en formato Kanban}  
     \begin{itemize}
         \item Creamos un nuevo archivo xml "view kanban" que va a tener la siguiente estructura pero un nivel básico para ir entendiendo poco a poco:
         
@@ -163,7 +164,7 @@ El objetivo de la primera actividad es modificar el módulo que creamos en la an
     \end{itemize}
     \vspace{0.5cm}
 
-    \item Vista visualización "Calendario" según fecha
+\subsection{Vista visualización "Calendario" según fecha}
     \begin{itemize}
         \item Hay que seguir más o menos los mismos pasos que para hacer la vista kanban. Creamos un archivo para el Calendario, pero lo primero es añadir un atributo nuevo a la vista principal que va a ser la fecha asignada.
         \item En el archivo models vamos a añadir el campo fecha asignada de las tareas que se va a crear.
@@ -292,20 +293,213 @@ class lista_tareas(models.Model):
         \vspace{1.2cm}
         
     \end{itemize}
-    \item Errores encontrados
+    \subsection{Errores encontrados} 
     \begin{itemize}
         \item Tuve un error que no me dejaba actualizar la aplicación de la lista de tareas y era porque me faltaba añadir la lista al manifest.
         \item Un error que tuve al actualizar la aplicación me detectó un error en el nombre del módulo. En esta versión de Odoo, el nombre del modelo debe de ser simplemente el nombre del módulo, no duplicado. Y lo tuve que cambiar en todos los archivos.
         
-        \includegraphics[height=9cm]{images/error1.png}
+        \includegraphics[height=8cm]{images/error1.png}
     \end{itemize}
-\end{itemize}
+
 
 \vspace{1cm}
 \section{Actividad 02 -  Biblioteca de Cómics}
-El objetivo de la primera actividad 
+Para este ejercicio vamos a modificar a partir de un módulo base de una biblioteca que fue aportado para que implementemos como base para la práctica y hacer las modificaciones que se nos pide adicional. Como sería gestionar socios. ejemplares para socios... Para empezar vamos a crear la carpeta con el módulo con sus respectivas carpetas y archivos.
 
+\begin{center}
+    \includegraphics[height=6.5cm]{images/modulo21.png}
+\end{center}
 
+Añadimos el contenido de los archivos para crear la base de la librería basándonos en los ejercicios de muestra que están en el repositorio proporcionados y entender el contenido que estamos realizando. Luego reiniciamos el contenedor o con actualizar la lista de aplicaciones bastaría, buscamos el nuevo módulo y lo activamos.
+
+\begin{center}
+    \includegraphics[height=4cm]{images/modulo22.png}
+\end{center}
+
+Si todo está correcto, podemos acceder al módulo en aplicaciones instaladas.
+
+\begin{center}
+    \includegraphics[height=6cm]{images/modulo23.png}
+\end{center}
+
+\subsection{Gestión de socios}
+Primero vamos a crear un nuevo modelo dentro de nuestra carpeta models, en este caso lo llamaremos "biblioteca socio.py". Y definiremos los campos que se deben de registrar de cada socio. Podemos usar como base el modelo principal manteniendo la base y añadiendo "nombre del socio", apellido y id para que sea único cada socio.
+
+\vspace{1cm}
+\begin{lstlisting}[style=javascript]
+# -*- coding: utf-8 -*-
+from odoo import models, fields, api
+
+#Definimos modelo Biblioteca socio
+class BibliotecaComic(models.Model):
+
+    #Nombre y descripcion del modelo
+    _name = 'biblioteca.socio'
+    #Hereda de "base.archive"
+    _inherit = ['base.archive']
+    _description = 'Socios de la biblioteca'
+
+    #ATRIBUTOS
+
+    nombre = fields.Char('Nombre', required=True)
+    apellido = fields.Char('Apellido',required=True)
+    identificacion = fields.Char('Identificador',required=True)
+    #Indicamos que atributo sera el que se usara para mostrar nombre.
+    #Aqui indicamos que se use el atributo "nombre"
+    _rec_name = 'nombre'
+  
+    _sql_constraints = [
+        ('identificador_uniq','UNIQUE(identificador)','El identificador ya existe')
+    ]
+\end{lstlisting} 
+
+Ahora en el archivo "init" de la carpeta models, importamos el nuevo archivo que acabamos de crear.
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+# -*- coding: utf-8 -*-
+
+from . import biblioteca_comic
+from . import biblioteca_socio
+\end{lstlisting} 
+
+Depués tenemos que crear la vista del nuevo panel para crear nuevos socios y poder modificarlos. Se va a crear un formulario con los datos a introducir, un listado y una opción para poder buscar los socios.
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Definimos como mostramos la vista en el modelo -->
+    <record id='biblioteca_comic_action_socios' model='ir.actions.act_window'>
+        <field name="name">Socios</field>
+        <!-- Indicamos a que modelo aplica -->
+        <field name="res_model">biblioteca.socio</field>
+        <!-- Indicamos que los socios pueden verse en list para el listado,
+            y en form para la creacion/edicion -->
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Definicion de la Vista formulario -->
+    <record id="biblioteca_socio_view_form" model="ir.ui.view">
+        <field name="name">Formulario de Comic de la biblioteca</field>
+        <field name="model">biblioteca.socio</field>
+        <field name="arch" type="xml">
+            <form>
+                <!-- Creamos un boton "archivar". 
+                    Este metodo archivar cambie el estado del atributo del modelo "activo"
+                -->
+                <header>
+                    <button type="object" name="archivar" string="Archivar Socios"/>
+                </header>
+                <group>
+                    <group>
+                    <!-- Atributos -->
+                        <field name="nombre"/>
+                        <field name="apellido"/>
+                        <field name="identificacion"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Definir de la vista list -->
+    <record id="biblioteca_socio_view_list" model="ir.ui.view">
+        <field name="name">Lista de Socios de la Biblioteca</field>
+        <field name="model">biblioteca.socio</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="nombre"/>
+                <field name="apellido"/>                        
+                <field name="identificacion"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Definir de la vista busqueda-->
+    <record id="biblioteca_socio_view_search" model="ir.ui.view">
+        <field name="name">Busqueda de los Socios</field>
+        <field name="model">biblioteca.socio</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nombre"/>
+                <field name="apellido"/>
+                <field name="identificacion"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>
+\end{lstlisting}
+
+La nueva vista que creamos la tenemos que añadir en nuestro archivo "manifest"
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+# -*- coding: utf-8 -*-
+{
+    'name': "Biblioteca comics",
+    'summary': """Biblioteca de comics""",
+    'description': """Gestion de ejemplares y socios""",
+    'author': "Andrea Sofia Pais Dos Santos",
+    'application': True,
+    'category': 'Productivity',
+    'version': '0.1',
+    'depends': ['base'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/groups.xml',
+        'views/biblioteca_socio.xml', # ponemos las nuevas vistas que vamos creando
+        'views/biblioteca_comic_views.xml',
+    ],
+}
+\end{lstlisting} 
+
+Para que podamos navegar a la vista que hemos creado, en la vista principal vamos a añadir al menú principal un nuevo apartado. Por lo que vamos a tener que modificar el archivo de vista principal "bilbioteca comic view.xlm" y añadir esta línea: 
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+# ......
+<menuitem name="Mi biblioteca" id="biblioteca_base_menu" />
+    <menuitem name="Comics" id="biblioteca_comic_menu" parent="biblioteca_base_menu" action="biblioteca_comic_action"/>
+    <!-- Creamos un nuevo apartado para la vista de Socios-->
+    <menuitem name="Socios" id="biblioteca_comic_menu_socio" parent="bilbioteca_base_menu" action="biblioteca_comic_actions_socios"/>
+# ......
+\end{lstlisting} 
+
+\subsubsection{Errores encontrados}
+
+\begin{itemize}
+    \item Un error que tuve fue no añadir al archivo ir.model.accss.csv el nuevo modelo que creamos.
+    \begin{lstlisting}[style=javascript]
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_biblioteca_comic,biblioteca.comic.access,model_biblioteca_comic,base.group_user,1,1,1,1
+access_biblioteca_socio,biblioteca.socio.access,model_biblioteca_socio,base.group_user,1,1,1,1
+    \end{lstlisting}
+    \item Y el resto de errores eran conflictos que había de definición de los atributos mal escritos sin darme cuenta.
+    \begin{center}
+        \includegraphics[height=9cm]{images/error2.png}
+    \end{center}
+\end{itemize}
+
+\vspace{1cm}
+\subsection{Gestión de préstamos}
+Para crear un apartado para gestionar los préstamos vamos a seguir más o menos los mismos pasos. Vamos primero a crear un nuevo modelo "biblioteca prestamos.py". Hay que tener en cuenta que cada cómic puede tener varios ejemplares para préstamos por lo que la relación va a ser de varios a uno "Many2One".
+
+Para el archivo modelo va a tener la siguiente estructura: 
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+# ......
+<menuitem name="Mi biblioteca" id="biblioteca_base_menu" />
+    <menuitem name="Comics" id="biblioteca_comic_menu" parent="biblioteca_base_menu" action="biblioteca_comic_action"/>
+    <!-- Creamos un nuevo apartado para la vista de Socios-->
+    <menuitem name="Socios" id="biblioteca_comic_menu_socio" parent="bilbioteca_base_menu" action="biblioteca_comic_actions_socios"/>
+# ......
+\end{lstlisting} 
+
+\subsection{Errores econtrados}
 
 \section{Actividad 03 -  }
 El objetivo de la primera actividad 
