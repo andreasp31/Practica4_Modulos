@@ -16,6 +16,8 @@
     <menuitem name="Comics" id="biblioteca_comic_menu" parent="biblioteca_base_menu" action="biblioteca_comic_action"/>
     <!-- Creamos un nuevo apartado para la vista de Socios-->
     <menuitem name="Socios" id="biblioteca_comic_menu_socio" parent="biblioteca_base_menu" action="biblioteca_comic_action_socios"/>
+    <!-- Creamos un nuevo apartado para la vista de los ejemplares-->
+    <menuitem name="Ejemplares" id="biblioteca_prestamos_menu" parent="biblioteca_base_menu" action="biblioteca_prestamos_action"/>
 
     <!-- Definición de la Vista formulario -->
     <record id="biblioteca_comic_view_form" model="ir.ui.view">

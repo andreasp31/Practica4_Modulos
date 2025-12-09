@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_biblioteca_comic,biblioteca.comic.access,model_biblioteca_comic,base.group_user,1,1,1,1
 access_biblioteca_socio,biblioteca.socio.access,model_biblioteca_socio,base.group_user,1,1,1,1
+access_biblioteca_prestamos,biblioteca.prestamos.access,model_biblioteca_prestamos,base.group_user,1,1,1,1

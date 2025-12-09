@@ -12,6 +12,7 @@
         'security/ir.model.access.csv',
         'security/groups.xml',
         'views/biblioteca_socio.xml', # ponemos las nuevas vistas que vamos creando
+        'views/biblioteca_prestamos.xml', # la nueva vista de los ejemplares y prestamos
         'views/biblioteca_comic_views.xml',
     ],
 }

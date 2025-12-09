@@ -60,7 +60,7 @@
     \begin{itemize}
     \item Gestionar socios y atributos
     \subitem Errores encontrados
-    \item Nuevo modelo para gestionar ejemplares
+    \item Gestión de prestámos
     \item Restricciones
     \subitem Errores encontrados
     \end{itemize}
@@ -468,6 +468,29 @@ Para que podamos navegar a la vista que hemos creado, en la vista principal vamo
 # ......
 \end{lstlisting} 
 
+Si todo está correcto, actualizamos el módulo y nos aparece un nuevo apartado en el menú principal.
+\begin{center}
+        \includegraphics[height=3cm]{images/modulo24.png}
+\end{center}
+
+Ahora ya podemos ver el nuevo apartado "Socios".
+
+\begin{center}
+        \includegraphics[height=5cm]{images/modulo25.png}
+\end{center}
+
+Dentro de la sección "Socios" podemos crear los socios que queramos con el nombre, apellido y identificación. 
+
+\begin{center}
+        \includegraphics[height=5cm]{images/modulo26.png}
+\end{center}
+
+Al estar creado ese socio pasa  a estar en la lista de socios en la que podemos ver sus datos.
+
+\begin{center}
+        \includegraphics[height=4cm]{images/modulo27.png}
+\end{center}
+
 \subsubsection{Errores encontrados}
 
 \begin{itemize}
@@ -487,25 +510,219 @@ access_biblioteca_socio,biblioteca.socio.access,model_biblioteca_socio,base.grou
 \subsection{Gestión de préstamos}
 Para crear un apartado para gestionar los préstamos vamos a seguir más o menos los mismos pasos. Vamos primero a crear un nuevo modelo "biblioteca prestamos.py". Hay que tener en cuenta que cada cómic puede tener varios ejemplares para préstamos por lo que la relación va a ser de varios a uno "Many2One".
 
-Para el archivo modelo va a tener la siguiente estructura: 
+Para el archivo modelo va a tener la siguiente estructura, tiene que tener los atributos que nos interesen en este caso necesitamos: el socio al que está prestado, el codigo del ejemplo prestado y la fecha del inicio y final del préstamo.
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+# -*- coding: utf-8 -*-
+from odoo import models, fields, api
+from datetime import timedelta
+from odoo.exceptions import ValidationError
+
+#Definir Modelo Biblioteca comic
+class BibliotecaPrestamos(models.Model):
+
+    #Nombre y descripcion del modelo
+    _name = 'biblioteca.prestamos'
+    _description = 'Ejempleares de los prestamos'
+
+    ejemplar_id = fields.Many2one('biblioteca.comic',string='Comic',required=True)
+    codigo = fields.Char('Ejemplar codigo',required=True)
+
+    estado = fields.Selection(
+        [('prestado', 'No disponible'),
+         ('disponible', 'Disponible'),
+         ('perdido', 'Perdido')],
+        string='Estado', default="disponible")
+
+    id_socio = fields.Many2one('biblioteca.socio', string='Socio', required=True)
+
+    fecha_inicio = fields.Date(string='Fecha de inicio del prestamo')
+    fecha_final = fields.Date(string='Fecha de final del prestamo')
+
+    _rec_name = 'codigo'
+
+    @api.constrains('fecha_inicio')
+    def _check_release_inicio(self):
+        for record in self:
+            #Comprobar de cada registro haya una fecha de inicio y que la fecha no sea posterior a la actual.
+            if record.fecha_inicio and record.fecha_inicio > fields.Date.today():
+    
+                raise models.ValidationError('La fecha de inicio del prestamo debe ser anterior a la actual')
+    
+    @api.constrains('fecha_final')
+    def _check_release_final(self):
+        for record in self:
+            #Comprobar de cada registo haya una fecha final y que la fecha tiene que ser posterior a la fecha actual.
+            if record.fecha_final and record.fecha_final < fields.Date.today():
+                #Si procede, lanzamos una excepcion
+                raise models.ValidationError('La fecha de final del prestamo debe ser posterior a la actual')
+
+
+\end{lstlisting} 
+
+Ahora tenemos que crear la vista del modelo que acabamos de crear.
+
+
+\vspace{2cm}
+\begin{lstlisting}[style=javascript]
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Definimos como mostramos la vista en el modelo -->
+    <record id='biblioteca_prestamos_action' model='ir.actions.act_window'>
+        <field name="name">Ejemplares</field>
+        <!-- Indicamos a que modelo aplica -->
+        <field name="res_model">biblioteca.prestamos</field>
+        <!-- Indicamos que los socios pueden verse en list para el listado,
+            y en form para la creacion/edicion -->
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Definir de la Vista formulario -->
+    <record id="biblioteca_prestamo_view_form" model="ir.ui.view">
+        <field name="name">Formulario de Prestamo de ejemplares</field>
+        <field name="model">biblioteca.prestamos</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                    <!-- Atributos del ejemplar -->
+                        <field name="ejemplar_id"/>
+                        <field name="codigo"/>
+                        <field name="estado"/>
+                    </group>
+                    <group>
+                    <!-- Atributos para el prestamo -->
+                        <field name="id_socio"/>
+                        <field name="fecha_inicio"/>
+                        <field name="fecha_final"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Definir de la vista list -->
+    <record id="biblioteca_prestamo_view_list" model="ir.ui.view">
+        <field name="name">Lista de Prestamos de la Biblioteca</field>
+        <field name="model">biblioteca.prestamos</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="codigo"/>
+                <field name="ejemplar_id"/>                        
+                <field name="id_socio"/>
+                <field name="fecha_inicio"/>                        
+                <field name="fecha_final"/>
+            </list>
+        </field>
+    </record>
+</odoo>
+\end{lstlisting}
+
+La vista la tenemos que añadir a nuestro archivo "manifest".
+
+\vspace{1.5cm}
+\begin{lstlisting}[style=javascript]
+# -*- coding: utf-8 -*-
+{
+    'name': "Biblioteca comics",
+    'summary': """Biblioteca de comics""",
+    'description': """Gestion de ejemplares y socios""",
+    'author': "Andrea Sofia Pais Dos Santos",
+    'application': True,
+    'category': 'Productivity',
+    'version': '0.1',
+    'depends': ['base'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/groups.xml',
+        'views/biblioteca_socio.xml', # ponemos las nuevas vistas que vamos creando
+        'views/biblioteca_prestamos.xml', # la nueva vista de los ejemplares y prestamos
+        'views/biblioteca_comic_views.xml',
+    ],
+}
+\end{lstlisting}
+
+Y también tenemos que hacer que esa vista aparezca para que puedas acceder a través del menú principal. Por lo que en la vista principal del módulo vamos a añadir otro item al menú: 
 
 \vspace{0.5cm}
 \begin{lstlisting}[style=javascript]
 # ......
 <menuitem name="Mi biblioteca" id="biblioteca_base_menu" />
-    <menuitem name="Comics" id="biblioteca_comic_menu" parent="biblioteca_base_menu" action="biblioteca_comic_action"/>
-    <!-- Creamos un nuevo apartado para la vista de Socios-->
-    <menuitem name="Socios" id="biblioteca_comic_menu_socio" parent="bilbioteca_base_menu" action="biblioteca_comic_actions_socios"/>
+<menuitem name="Comics" id="biblioteca_comic_menu" parent="biblioteca_base_menu" action="biblioteca_comic_action"/>
+<!-- Creamos un nuevo apartado para la vista de Socios-->
+<menuitem name="Socios" id="biblioteca_comic_menu_socio" parent="biblioteca_base_menu" action="biblioteca_comic_action_socios"/>
+<!-- Creamos un nuevo apartado para la vista de los ejemplares-->
+<menuitem name="Ejemplares" id="biblioteca_prestamos_menu" parent="biblioteca_base_menu" action="biblioteca_prestamos_action"/>
 # ......
 \end{lstlisting} 
 
+Además tenemos que importa el modelo en el archivo "init" de la carpeta modelos: 
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+# -*- coding: utf-8 -*-
+
+from . import biblioteca_comic
+from . import biblioteca_socio
+from . import biblioteca_prestamos
+\end{lstlisting}
+
+\vspace{1cm}
+\subsection{Restricciones}
+
+Y por último, vamos a tener que añadir la última línea que son los permisos en el archivo "ir.model.access.csv":
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_biblioteca_comic,biblioteca.comic.access,model_biblioteca_comic,base.group_user,1,1,1,1
+access_biblioteca_socio,biblioteca.socio.access,model_biblioteca_socio,base.group_user,1,1,1,1
+access_biblioteca_prestamos,biblioteca.prestamos.access,model_biblioteca_prestamos,base.group_user,1,1,1,1
+\end{lstlisting}
+
+Al rematar, si todo está correcto, actualizamos la lista de aplicaciones y volvemos a actualizar el módulo. Para ver que funciona voy a crear un libro de ejemplo y con el socio que hemos creado anteriormente podemos realizar un préstamo.
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=8.5cm]{images/modulo28.png}
+\end{center}
+
+Al intentar realizar el préstamo vemos como no nos deja por ejemplo poner que el fin del préstamo tiene que ser días posteriores al día actual.
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=8.5cm]{images/modulo29.png}
+\end{center}
+
+Y aquí vemos donde iría el listado de todos los préstamos con sus atributos: el código, el nombre del libro, el socio que pide el préstamo y las fechas del préstamo.
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=6.5cm]{images/modulo291.png}
+\end{center}
+
+
+\vspace{1cm}
 \subsection{Errores econtrados}
-
-\section{Actividad 03 -  }
-El objetivo de la primera actividad 
+Los errores encontrados siguen siendo constantemente errores al escribir rápido, olvidarme el nombre de los atributos y escribirlos distintos, poner palabras en singular cuando tendría que ser plural, etc. 
 
 
-\section{Actividad 04 -  }
+\vspace{1cm}
+\section{Actividad 03 - Módulo Hospital }
+Para esta actividad hay que realizar más o menos los mismos pasos que en el anterior cambiando los tipos de relación entre entidades. Hay que crear 3 modelos con sus respectivos atributos y tener en cuenta las relaciones. Voy a crear la carpeta para el nuevo módulo con los archivos base que vamos a ir rellenando a medida que se hacen los apartados.
+
+\subsection{Modelo Paciente}
+Primero vamos a crear el modelo 
+
+\subsection{Modelo Médico}
+
+
+
+\subsection{Modelo Consulta}
+
+
+\section{Actividad 04 - Módulo Colegio }
 El objetivo de la primera actividad 
 
 \end{document}

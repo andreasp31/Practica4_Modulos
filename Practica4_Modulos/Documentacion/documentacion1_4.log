@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.26)  9 DEC 2025 17:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.26)  10 DEC 2025 00:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -359,7 +359,7 @@ File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
 
 [3]
-<images/modulo1.png, id=115, 1444.64719pt x 228.855pt>
+<images/modulo1.png, id=131, 1444.64719pt x 228.855pt>
 File: images/modulo1.png Graphic file (type png)
 <use images/modulo1.png>
 Package pdftex.def Info: images/modulo1.png  used on input line 163.
@@ -369,7 +369,7 @@ Package pdftex.def Info: images/modulo1.png  used on input line 163.
 [4 <./images/modulo1.png>]
 
 [5]
-<images/calendario3.png, id=200, 849.92531pt x 232.61906pt>
+<images/calendario3.png, id=216, 849.92531pt x 232.61906pt>
 File: images/calendario3.png Graphic file (type png)
 <use images/calendario3.png>
 Package pdftex.def Info: images/calendario3.png  used on input line 281.
@@ -377,12 +377,12 @@ Package pdftex.def Info: images/calendario3.png  used on input line 281.
 
 
 [6]
-<images/calendario1.png, id=246, 558.58687pt x 569.87906pt>
+<images/calendario1.png, id=262, 558.58687pt x 569.87906pt>
 File: images/calendario1.png Graphic file (type png)
 <use images/calendario1.png>
 Package pdftex.def Info: images/calendario1.png  used on input line 286.
 (pdftex.def)             Requested size: 278.88362pt x 284.52756pt.
-<images/calendario2.png, id=247, 1329.46687pt x 602.25pt>
+<images/calendario2.png, id=263, 1329.46687pt x 602.25pt>
 File: images/calendario2.png Graphic file (type png)
 <use images/calendario2.png>
 Package pdftex.def Info: images/calendario2.png  used on input line 291.
@@ -390,12 +390,12 @@ Package pdftex.def Info: images/calendario2.png  used on input line 291.
 
 
 [7 <./images/calendario3.png> <./images/calendario1.png> <./images/calendario2.png>]
-<images/error1.png, id=256, 883.80188pt x 552.56438pt>
+<images/error1.png, id=272, 883.80188pt x 552.56438pt>
 File: images/error1.png Graphic file (type png)
 <use images/error1.png>
 Package pdftex.def Info: images/error1.png  used on input line 301.
 (pdftex.def)             Requested size: 364.06032pt x 227.62204pt.
-<images/modulo21.png, id=257, 215.30438pt x 277.78781pt>
+<images/modulo21.png, id=273, 215.30438pt x 277.78781pt>
 File: images/modulo21.png Graphic file (type png)
 <use images/modulo21.png>
 Package pdftex.def Info: images/modulo21.png  used on input line 310.
@@ -403,12 +403,12 @@ Package pdftex.def Info: images/modulo21.png  used on input line 310.
 
 
 [8 <./images/error1.png> <./images/modulo21.png>]
-<images/modulo22.png, id=264, 341.02406pt x 95.6072pt>
+<images/modulo22.png, id=280, 341.02406pt x 95.6072pt>
 File: images/modulo22.png Graphic file (type png)
 <use images/modulo22.png>
 Package pdftex.def Info: images/modulo22.png  used on input line 316.
 (pdftex.def)             Requested size: 405.97456pt x 113.81102pt.
-<images/modulo23.png, id=265, 679.03688pt x 239.39438pt>
+<images/modulo23.png, id=281, 679.03688pt x 239.39438pt>
 File: images/modulo23.png Graphic file (type png)
 <use images/modulo23.png>
 Package pdftex.def Info: images/modulo23.png  used on input line 322.
@@ -430,35 +430,83 @@ Overfull \hbox (1.3888pt too wide) in paragraph at lines 356--357
 [10]
 
 [11]
-<images/error2.png, id=393, 732.48656pt x 520.19344pt>
+<images/modulo24.png, id=409, 342.5297pt x 114.4275pt>
+File: images/modulo24.png Graphic file (type png)
+<use images/modulo24.png>
+Package pdftex.def Info: images/modulo24.png  used on input line 473.
+(pdftex.def)             Requested size: 255.52205pt x 85.35826pt.
+<images/modulo25.png, id=410, 710.655pt x 243.91125pt>
+File: images/modulo25.png Graphic file (type png)
+<use images/modulo25.png>
+Package pdftex.def Info: images/modulo25.png  used on input line 479.
+(pdftex.def)             Requested size: 414.50073pt x 142.26378pt.
+<images/modulo26.png, id=411, 450.9347pt x 256.70906pt>
+File: images/modulo26.png Graphic file (type png)
+<use images/modulo26.png>
+Package pdftex.def Info: images/modulo26.png  used on input line 485.
+(pdftex.def)             Requested size: 249.90016pt x 142.26378pt.
+<images/modulo27.png, id=412, 639.13782pt x 171.64125pt>
+File: images/modulo27.png Graphic file (type png)
+<use images/modulo27.png>
+Package pdftex.def Info: images/modulo27.png  used on input line 491.
+(pdftex.def)             Requested size: 423.79251pt x 113.81102pt.
+
+
+[12 <./images/modulo24.png> <./images/modulo25.png> <./images/modulo26.png>]
+<images/error2.png, id=427, 732.48656pt x 520.19344pt>
 File: images/error2.png Graphic file (type png)
 <use images/error2.png>
-Package pdftex.def Info: images/error2.png  used on input line 482.
+Package pdftex.def Info: images/error2.png  used on input line 505.
 (pdftex.def)             Requested size: 360.57571pt x 256.0748pt.
 
 
-[12 <./images/error2.png>]
+[13 <./images/modulo27.png> <./images/error2.png>]
 
-[13] (documentacion1_4.aux)
+[14]
+
+[15]
+
+[16]
+<images/modulo28.png, id=585, 746.03719pt x 398.99063pt>
+File: images/modulo28.png Graphic file (type png)
+<use images/modulo28.png>
+Package pdftex.def Info: images/modulo28.png  used on input line 688.
+(pdftex.def)             Requested size: 452.21335pt x 241.84842pt.
+<images/modulo29.png, id=586, 645.91313pt x 443.40656pt>
+File: images/modulo29.png Graphic file (type png)
+<use images/modulo29.png>
+Package pdftex.def Info: images/modulo29.png  used on input line 695.
+(pdftex.def)             Requested size: 352.30643pt x 241.84842pt.
+
+
+[17 <./images/modulo28.png> <./images/modulo29.png>]
+<images/modulo291.png, id=596, 763.35187pt x 319.1925pt>
+File: images/modulo291.png Graphic file (type png)
+<use images/modulo291.png>
+Package pdftex.def Info: images/modulo291.png  used on input line 702.
+(pdftex.def)             Requested size: 442.29013pt x 184.9429pt.
+
+
+[18 <./images/modulo291.png>] (documentacion1_4.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-09-02>
  ***********
 Package rerunfilecheck Info: File `documentacion1_4.out' has not changed.
-(rerunfilecheck)             Checksum: CDB496AA348FFE53CA6E7B14052B4F36;2165.
+(rerunfilecheck)             Checksum: DE4A3ADDBDE2CA693667A37470EB1233;2862.
  ) 
 Here is how much of TeX's memory you used:
- 12947 strings out of 468130
- 198617 string characters out of 5430633
- 1147997 words of memory out of 5000000
- 41125 multiletter control sequences out of 15000+600000
+ 13179 strings out of 468130
+ 202668 string characters out of 5430633
+ 1148001 words of memory out of 5000000
+ 41219 multiletter control sequences out of 15000+600000
  636225 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,7n,79p,676b,2131s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tctt1000.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1000.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0600.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk>
-Output written on documentacion1_4.pdf (13 pages, 351286 bytes).
+Output written on documentacion1_4.pdf (18 pages, 502504 bytes).
 PDF statistics:
- 799 PDF objects out of 1000 (max. 8388607)
- 311 named destinations out of 1000 (max. 500000)
- 150 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1015 PDF objects out of 1200 (max. 8388607)
+ 449 named destinations out of 1000 (max. 500000)
+ 217 words of extra memory for PDF output out of 10000 (max. 10000000)
 
