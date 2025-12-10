@@ -64,10 +64,11 @@
     \item Restricciones
     \subitem Errores encontrados
     \end{itemize}
-    \item Actividad 03 ....................................................................................... página 4
+    \item Actividad 03 - Módulo Hospital ......................................................... página 18
     \begin{itemize}
-    \item Módulo para gestionar pacientes, médicos y consultas
-    \item Implementar las vistas adecuadas para los 3 modelos
+    \item Modelo Paciente
+    \item Modelo Médico
+    \item Modelo Consulta
     \item Errores encontrados 
     \end{itemize}
     \item Actividad 04 ....................................................................................... página 4
@@ -713,10 +714,351 @@ Los errores encontrados siguen siendo constantemente errores al escribir rápido
 Para esta actividad hay que realizar más o menos los mismos pasos que en el anterior cambiando los tipos de relación entre entidades. Hay que crear 3 modelos con sus respectivos atributos y tener en cuenta las relaciones. Voy a crear la carpeta para el nuevo módulo con los archivos base que vamos a ir rellenando a medida que se hacen los apartados.
 
 \subsection{Modelo Paciente}
-Primero vamos a crear el modelo 
+Primero vamos a crear el modelo de pacientes empezando a crear el archivo modelo y su respectiva vista con los atributos que nos pide en este caso: nombre, apellidos y síntomas.
+
+\vspace{1.5cm}
+\begin{lstlisting}[style=javascript]
+# -*- coding: utf-8 -*-
+from datetime import timedelta
+
+from odoo import models, fields, api
+from odoo.exceptions import ValidationError
+
+
+# Modelo base, creado como modelo abstracto 
+# Este modelo lo heredarara el modelo HospitalPaciente
+class BaseArchive(models.AbstractModel):
+    #Nombre y descripcion del modelo
+    _name = 'base.archive'
+    _inherit = ['base.archive']
+    _description = 'Fichero abstracto'
+
+    #Introduce el atributo "Activo"
+    activo = fields.Boolean(default=True)
+
+    #Introducice metodo "archivar" que invierte el estado de "activo"
+    #Recordamos se recive "self" como el modelo entero y no como un registro,
+    #por ese motivo debemos iterar
+    def archivar(self):
+        #Por cada registro del modelo
+        for record in self:
+            #Cambiamos el valor de activo a su version negada
+            record.activo = not record.activo
+
+
+#Definir Modelo Biblioteca comic
+class HospitalPaciente(models.Model):
+
+    #Nombre y descripcion del modelo
+    _name = 'hospital.paciente'
+    #Hereda de "base.archive"
+    _inherit = ['base.archive']
+
+    _description = 'Paciente del Hospital'
+
+    #ATRIBUTOS
+    
+    #Indicamos que atributo sera el que se usara para mostrar nombre.
+    #Por defecto es "name", pero si no hay un atributo que se llama name, aqui lo indicamos
+    #Aqui indicamos que se use el atributo "nombre"
+    _rec_name = 'nombre'
+    #Atributo nombre
+    nombre = fields.Char('Nombre', required=True)
+    apellidos = fields.Html('Apellidos', required=True)
+    sintomas = fields.Html('Sintomas', required=True)
+\end{lstlisting}
+
+Ahora creamos la vista donde vamos a poder rellenar el formulario del paciente, listarlo y buscar. 
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Definimos como mostramos la vista en el modelo -->
+    <record id='hospital_paciente_action' model='ir.actions.act_window'>
+        <field name="name">Pacientes del hospital</field>
+        <!-- Indicamos a que modelo aplica -->
+        <field name="res_model">hospital.paciente</field>
+        <!-- Indicamos que los pacientes pueden verse en list para el listado,
+            y en form para la creacion/edicion -->
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Simple menu item, sin mas utilidad que la didactica -->
+    <menuitem name="Hospital Central" id="hospital_base_menu" />
+    <menuitem name="Pacientes" id="hospital_paciente_menu" parent="hospital_base_menu" action="hospital_paciente_action"/>
+    <!-- Creamos un nuevo apartado para la vista de Socios-->
+    <menuitem name="Medicos" id="hospital_medico_menu" parent="hospital_base_menu" action="hospital_medico_action"/>
+
+    <!-- Definicion de la Vista formulario -->
+    <record id="hospital_paciente_view_form" model="ir.ui.view">
+        <field name="name">Formulario de los pacientes del hospital</field>
+        <field name="model">hospital.paciente</field>
+        <field name="arch" type="xml">
+            <form>
+                <!-- Creamos un boton "archivar". 
+                    Al llamarse "archivar" se encarga de llamar al metodo "archivar"
+                    del modelo del que hereda "hospital paciente".
+                    Este metodo archivar cambie el estado del atributo del modelo "activo"
+                -->
+                <header>
+                    <button type="object" name="archivar" string="Archivar Pacientes"/>
+                </header>
+                <group>
+                    <group>
+                        <field name="nombre"/>
+                        <field name="apellidos"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="sintomas"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Definir de la vista list -->
+    <record id="hospital_paciente_view_list" model="ir.ui.view">
+        <field name="name">Lista de los pacientes del hospital</field>
+        <field name="model">hospital.paciente</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="nombre"/>
+                <field name="apellidos"/>                        
+                <field name="sintomas"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Definir de la vista busqueda-->
+    <record id="hospital_paciente_view_search" model="ir.ui.view">
+        <field name="name">Busqueda de pacientes del hospital</field>
+        <field name="model">hospital.paciente</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nombre"/>
+                <field name="apellidos"/>
+                <field name="sintomas"/>
+            </search>
+        </field>
+    </record>
+</odoo>
+\end{lstlisting}
+
+Después de haber creado estos archivos tenemos que importarlo en el archivo "init" de la carpeta models.
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+# -*- coding: utf-8 -*-
+
+from . import hospital_medico
+\end{lstlisting}
+
+También añadir en el archivo principal "manifest" la vista que hemos creado.
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+# -*- coding: utf-8 -*-
+{
+    'name': "Modulo Hospital",
+    'summary': """Gestion de un Hospital""",
+    'description': """Gestion de pacientes, medicos y consultas""",
+    'author': "Andrea Sofia Pais Dos Santos",
+    'application': True,
+    'category': 'Productivity',
+    'version': '0.1',
+    'depends': ['base'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/groups.xml',
+        'views/hospital_medico.xml', # ponemos las nuevas vistas que vamos creando
+    ],
+}
+\end{lstlisting}
+
+Y ya por último darle los permisos al archivo "ir.model.access.csv":
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hospital_paciente,hospital.paciente.access,model_hospital_paciente,base.group_user,1,1,1,1
+\end{lstlisting}
+
+Si todo está correcto, actualizamos la lista de las aplicaciones y buscamos el nuevo creado y lo activamos.
+\begin{center}
+    \includegraphics[height=3cm]{images/modulo30.png}
+\end{center}
+
+Y al acceder al módulo vemos que se creó la vista pacientes y ya de paso hice la vista médico ya que es prácticamente los mismos pasos, archivos y contenido.
+
+\begin{center}
+    \includegraphics[height=4cm]{images/modulo31.png}
+\end{center}
+
+Para ver su correcto funcionamiento vamos a crear un paciente nuevo: 
+\begin{center}
+    \includegraphics[height=6cm]{images/modelo32.png}
+\end{center}
+
+Y como se ve listado ese paciente creado.
+
+\begin{center}
+    \includegraphics[height=5cm]{images/modelo33.png}
+\end{center}
 
 \subsection{Modelo Médico}
+Por otro lado tenemos el modelo médico que para crear el modelo y la vista es lo mismo que para realizar el de paciente pero con diferentes atributos, en este caso tenemos que implementar: nombre, apellidos y número de colegiado. Para el archivo model vamos a tener la siguiente estructura con los atributos anteriores: 
 
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+# -*- coding: utf-8 -*-
+from odoo import models, fields, api
+
+#Definimos modelo Biblioteca socio
+class BibliotecaComic(models.Model):
+
+    #Nombre y descripcion del modelo
+    _name = 'hospital.medico'
+    #Hereda de "base.archive"
+    _inherit = ['base.archive']
+    _description = 'Medicos del hospital'
+
+    #ATRIBUTOS
+
+    nombre = fields.Char('Nombre', required=True)
+    apellidos = fields.Char('Apellidos',required=True)
+    num_colegiado = fields.Char('Numero colegiado',required=True)
+    #Indicamos que atributo sera el que se usara para mostrar nombre.
+    #Aqui indicamos que se use el atributo "nombre"
+    _rec_name = 'nombre'
+  
+    _sql_constraints = [
+        ('num_colegiado_uniq','UNIQUE(num_colegiado)','El identificador ya existe')
+    ]
+\end{lstlisting}
+
+Ahora creamos la vista donde vamos a poder rellenar el formulario del médico, listarlo y buscar. 
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Definimos como mostramos la vista en el modelo -->
+    <record id='hospital_medico_action' model='ir.actions.act_window'>
+        <field name="name">Medico</field>
+        <!-- Indicamos a que modelo aplica -->
+        <field name="res_model">hospital.medico</field>
+        <!-- Indicamos que los medicos pueden verse en list para el listado,
+            y en form para la creacion/edicion -->
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Definirde la Vista formulario -->
+    <record id="hospital_medico_view_form" model="ir.ui.view">
+        <field name="name">Formulario de los medicos del hospital</field>
+        <field name="model">hospital.medico</field>
+        <field name="arch" type="xml">
+            <form>
+                <!-- Creamos un boton "archivar". 
+                    Este metodo archivar cambie el estado del atributo del modelo "activo"
+                -->
+                <header>
+                    <button type="object" name="archivar" string="Archivar Medicos"/>
+                </header>
+                <group>
+                    <group>
+                    <!-- Atributos -->
+                        <field name="nombre"/>
+                        <field name="apellidos"/>
+                        <field name="num_colegiado"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Definir de la vista list -->
+    <record id="hospital_medico_view_list" model="ir.ui.view">
+        <field name="name">Lista de medicos del hospital</field>
+        <field name="model">hospital.medico</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="nombre"/>
+                <field name="apellidos"/>                        
+                <field name="num_colegiado"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Definir de la vista busqueda-->
+    <record id="hospital_medico_view_search" model="ir.ui.view">
+        <field name="name">Busqueda de los Medicos</field>
+        <field name="model">hospital.medico</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nombre"/>
+                <field name="apellidos"/>
+                <field name="num_colegiado"/>
+            </search>
+        </field>
+    </record>
+</odoo>
+\end{lstlisting}
+
+Después de haber creado estos archivos tenemos que importarlo en el archivo "init" de la carpeta models.
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+# -*- coding: utf-8 -*-
+
+from . import hospital_medico
+from . import hospital_paciente
+\end{lstlisting}
+
+También añadir en el archivo principal "manifest" la vista que hemos creado.
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+# -*- coding: utf-8 -*-
+{
+    'name': "Modulo Hospital",
+    'summary': """Gestion de un Hospital""",
+    'description': """Gestion de pacientes, medicos y consultas""",
+    'author': "Andrea Sofia Pais Dos Santos",
+    'application': True,
+    'category': 'Productivity',
+    'version': '0.1',
+    'depends': ['base'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/groups.xml',
+        'views/hospital_medico.xml', # ponemos las nuevas vistas que vamos creando
+        'views/hospital_paciente.xml', # y ahora la vista del modelo medico
+    ],
+}
+\end{lstlisting}
+
+Y ya por último darle los permisos al archivo "ir.model.access.csv":
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hospital_paciente,hospital.paciente.access,model_hospital_paciente,base.group_user,1,1,1,1
+access_hospital_medico,hospital.medico.access,model_hospital_medico,base.group_user,1,1,1,1
+\end{lstlisting}
+
+Si todo está correcto, actualizamos la lista de las aplicaciones y actualizamos también el módulo. Al haberlos creado al mismo tiempo ya habíamos visto que el módulo y las dos vistas ahora hay que comprobar que se puede crear tanto pacientes como médicos. Vamos a crear un médico de ejemplo para ver que funciona correctamente: 
+
+\begin{center}
+    \includegraphics[height=6cm]{images/modulo34.png}
+\end{center}
+
+Y vemos como se lista ese médico creado.
+\begin{center}
+    \includegraphics[height=4cm]{images/modulo35.png}
+\end{center}
 
 
 \subsection{Modelo Consulta}

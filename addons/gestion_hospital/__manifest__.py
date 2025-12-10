@@ -1,0 +1,17 @@
+# -*- coding: utf-8 -*-
+{
+    'name': "Módulo Hospital",
+    'summary': """Gestión de un Hospital""",
+    'description': """Gestión de pacientes, medicos y consultas""",
+    'author': "Andrea Sofía Pais Dos Santos",
+    'application': True,
+    'category': 'Productivity',
+    'version': '0.1',
+    'depends': ['base'],
+    'data': [
+        'security/ir.model.access.csv',
+        'security/groups.xml',
+        'views/hospital_medico.xml', # ponemos las nuevas vistas que vamos creando
+        'views/hospital_paciente.xml', # y ahora la vista del modelo medico
+    ],
+}
