@@ -2,7 +2,7 @@
 <odoo>
 
     <!-- Definimos como mostramos la vista en el modelo -->
-    <record id='hospital_paciente_action' model='ir.actions.act_window'>
+    <record id='gestion_hospital.hospital_paciente_action' model='ir.actions.act_window'>
         <field name="name">Pacientes del hospital</field>
         <!-- Indicamos a que modelo aplica -->
         <field name="res_model">hospital.paciente</field>
@@ -11,14 +11,8 @@
         <field name="view_mode">list,form</field>
     </record>
 
-    <!-- Simple menu item, sin más utilidad que la didáctica -->
-    <menuitem name="Hospital Central" id="hospital_base_menu" />
-    <menuitem name="Pacientes" id="hospital_paciente_menu" parent="hospital_base_menu" action="hospital_paciente_action"/>
-    <!-- Creamos un nuevo apartado para la vista de Socios-->
-    <menuitem name="Medicos" id="hospital_medico_menu" parent="hospital_base_menu" action="hospital_medico_action"/>
-
     <!-- Definir de la Vista formulario -->
-    <record id="hospital_paciente_view_form" model="ir.ui.view">
+    <record id="gestion_hospital.hospital_paciente_view_form" model="ir.ui.view">
         <field name="name">Formulario de los pacientes del hospital</field>
         <field name="model">hospital.paciente</field>
         <field name="arch" type="xml">
@@ -38,34 +32,33 @@
                     </group>
                 </group>
                 <group>
-                    <field name="sintomas"/>
+                    <field name="sintomas" widget="html"/>
                 </group>
             </form>
         </field>
     </record>
 
     <!-- Definir de la vista list -->
-    <record id="hospital_paciente_view_list" model="ir.ui.view">
+    <record id="gestion_hospital.hospital_paciente_view_list" model="ir.ui.view">
         <field name="name">Lista de los pacientes del hospital</field>
         <field name="model">hospital.paciente</field>
         <field name="arch" type="xml">
             <list>
                 <field name="nombre"/>
                 <field name="apellidos"/>                        
-                <field name="sintomas"/>
+                <field name="sintomas" widget="html"/>
             </list>
         </field>
     </record>
 
     <!-- Definir de la vista busqueda-->
-    <record id="hospital_paciente_view_search" model="ir.ui.view">
+    <record id="gestion_hospital.hospital_paciente_view_search" model="ir.ui.view">
         <field name="name">Búsqueda de pacientes del hospital</field>
         <field name="model">hospital.paciente</field>
         <field name="arch" type="xml">
             <search>
                 <field name="nombre"/>
                 <field name="apellidos"/>
-                <field name="sintomas"/>
             </search>
         </field>
     </record>

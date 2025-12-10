@@ -11,7 +11,6 @@ from odoo.exceptions import ValidationError
 class BaseArchive(models.AbstractModel):
     #Nombre y descripcion del modelo
     _name = 'base.archive'
-    _inherit = ['base.archive']
     _description = 'Fichero abstracto'
 
     #Introduce el atributo "Activo"
@@ -45,6 +44,6 @@ class HospitalPaciente(models.Model):
     _rec_name = 'nombre'
     #Atributo nombre
     nombre = fields.Char('Nombre', required=True)
-    apellidos = fields.Html('Apellidos', required=True)
-    sintomas = fields.Html('Sintomas', required=True)
+    apellidos = fields.Char('Apellidos', required=True)
+    sintomas = fields.Html('Síntomas', required=True)
    

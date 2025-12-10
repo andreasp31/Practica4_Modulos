@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem name="Hospital Central" id="gestion_hospital.hospital_base_menu" />
+    <menuitem name="Pacientes" id="gestion_hospital.hospital_paciente_menu" parent="gestion_hospital.hospital_base_menu" action="gestion_hospital.hospital_paciente_action"/>
+    <menuitem name="Medicos" id="gestion_hospital.hospital_medico_menu" parent="gestion_hospital.hospital_base_menu" action="gestion_hospital.hospital_medico_action"/>
+    <menuitem name="Consultas" id="gestion_hospital.hospital_consulta_menu" parent="gestion_hospital.hospital_base_menu" action="gestion_hospital.hospital_consulta_action"/>
+</odoo>

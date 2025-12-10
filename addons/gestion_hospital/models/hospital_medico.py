@@ -2,7 +2,7 @@
 from odoo import models, fields, api
 
 #Definimos modelo Biblioteca socio
-class BibliotecaComic(models.Model):
+class HospitalMedico(models.Model):
 
     #Nombre y descripcion del modelo
     _name = 'hospital.medico'

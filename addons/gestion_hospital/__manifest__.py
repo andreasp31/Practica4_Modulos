@@ -9,9 +9,11 @@
     'version': '0.1',
     'depends': ['base'],
     'data': [
-        'security/ir.model.access.csv',
-        'security/groups.xml',
         'views/hospital_medico.xml', # ponemos las nuevas vistas que vamos creando
         'views/hospital_paciente.xml', # y ahora la vista del modelo medico
+        'views/hospital_consulta.xml', # y por ultimo la vista de las consultas
+        'views/hospital_menu.xml', # un nuevo archivo del menu porque me daba error al crearlo desde la visa paciente
+        'security/ir.model.access.csv',
+        'security/groups.xml',
     ],
 }

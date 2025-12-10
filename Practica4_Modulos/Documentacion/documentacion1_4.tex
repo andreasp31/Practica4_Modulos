@@ -71,7 +71,7 @@
     \item Modelo Consulta
     \item Errores encontrados 
     \end{itemize}
-    \item Actividad 04 ....................................................................................... página 4
+    \item Actividad 04 ....................................................................................... página 28
     \begin{itemize}
     \item Crear 4 modelos (Ciclo Formativo, Módulo, Alumno y Profesor)
     \item Implementar los modelos, relaciones y vistas necesarias
@@ -727,10 +727,10 @@ from odoo.exceptions import ValidationError
 
 # Modelo base, creado como modelo abstracto 
 # Este modelo lo heredarara el modelo HospitalPaciente
+# Y se ha creado puramente con fin didactico para ver herencia entre modelos
 class BaseArchive(models.AbstractModel):
     #Nombre y descripcion del modelo
     _name = 'base.archive'
-    _inherit = ['base.archive']
     _description = 'Fichero abstracto'
 
     #Introduce el atributo "Activo"
@@ -764,7 +764,7 @@ class HospitalPaciente(models.Model):
     _rec_name = 'nombre'
     #Atributo nombre
     nombre = fields.Char('Nombre', required=True)
-    apellidos = fields.Html('Apellidos', required=True)
+    apellidos = fields.Char('Apellidos', required=True)
     sintomas = fields.Html('Sintomas', required=True)
 \end{lstlisting}
 
@@ -776,7 +776,7 @@ Ahora creamos la vista donde vamos a poder rellenar el formulario del paciente, 
 <odoo>
 
     <!-- Definimos como mostramos la vista en el modelo -->
-    <record id='hospital_paciente_action' model='ir.actions.act_window'>
+    <record id='gestion_hospital.hospital_paciente_action' model='ir.actions.act_window'>
         <field name="name">Pacientes del hospital</field>
         <!-- Indicamos a que modelo aplica -->
         <field name="res_model">hospital.paciente</field>
@@ -785,14 +785,8 @@ Ahora creamos la vista donde vamos a poder rellenar el formulario del paciente, 
         <field name="view_mode">list,form</field>
     </record>
 
-    <!-- Simple menu item, sin mas utilidad que la didactica -->
-    <menuitem name="Hospital Central" id="hospital_base_menu" />
-    <menuitem name="Pacientes" id="hospital_paciente_menu" parent="hospital_base_menu" action="hospital_paciente_action"/>
-    <!-- Creamos un nuevo apartado para la vista de Socios-->
-    <menuitem name="Medicos" id="hospital_medico_menu" parent="hospital_base_menu" action="hospital_medico_action"/>
-
-    <!-- Definicion de la Vista formulario -->
-    <record id="hospital_paciente_view_form" model="ir.ui.view">
+    <!-- Definir de la Vista formulario -->
+    <record id="gestion_hospital.hospital_paciente_view_form" model="ir.ui.view">
         <field name="name">Formulario de los pacientes del hospital</field>
         <field name="model">hospital.paciente</field>
         <field name="arch" type="xml">
@@ -812,34 +806,33 @@ Ahora creamos la vista donde vamos a poder rellenar el formulario del paciente, 
                     </group>
                 </group>
                 <group>
-                    <field name="sintomas"/>
+                    <field name="sintomas" widget="html"/>
                 </group>
             </form>
         </field>
     </record>
 
     <!-- Definir de la vista list -->
-    <record id="hospital_paciente_view_list" model="ir.ui.view">
+    <record id="gestion_hospital.hospital_paciente_view_list" model="ir.ui.view">
         <field name="name">Lista de los pacientes del hospital</field>
         <field name="model">hospital.paciente</field>
         <field name="arch" type="xml">
             <list>
                 <field name="nombre"/>
                 <field name="apellidos"/>                        
-                <field name="sintomas"/>
+                <field name="sintomas" widget="html"/>
             </list>
         </field>
     </record>
 
     <!-- Definir de la vista busqueda-->
-    <record id="hospital_paciente_view_search" model="ir.ui.view">
+    <record id="gestion_hospital.hospital_paciente_view_search" model="ir.ui.view">
         <field name="name">Busqueda de pacientes del hospital</field>
         <field name="model">hospital.paciente</field>
         <field name="arch" type="xml">
             <search>
                 <field name="nombre"/>
                 <field name="apellidos"/>
-                <field name="sintomas"/>
             </search>
         </field>
     </record>
@@ -852,7 +845,7 @@ Después de haber creado estos archivos tenemos que importarlo en el archivo "in
 \begin{lstlisting}[style=javascript]
 # -*- coding: utf-8 -*-
 
-from . import hospital_medico
+from . import hospital_paciente
 \end{lstlisting}
 
 También añadir en el archivo principal "manifest" la vista que hemos creado.
@@ -872,7 +865,7 @@ También añadir en el archivo principal "manifest" la vista que hemos creado.
     'data': [
         'security/ir.model.access.csv',
         'security/groups.xml',
-        'views/hospital_medico.xml', # ponemos las nuevas vistas que vamos creando
+        'views/hospital_paciente.xml', # ponemos las nuevas vistas que vamos creando
     ],
 }
 \end{lstlisting}
@@ -884,6 +877,22 @@ Y ya por último darle los permisos al archivo "ir.model.access.csv":
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_hospital_paciente,hospital.paciente.access,model_hospital_paciente,base.group_user,1,1,1,1
 \end{lstlisting}
+
+Vamos a crear un archivo que se llama "hospital menu.xml" que se va a encargar de generar los apartados del menú superior y va a tener el siguiente contenido: 
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem name="Hospital Central" id="gestion_hospital.hospital_base_menu" />
+    <menuitem name="Pacientes" id="gestion_hospital.hospital_paciente_menu" parent="gestion_hospital.hospital_base_menu" action="gestion_hospital.hospital_paciente_action"/>
+    <!-- luego vamos a poner los siguientes apartados que ya los dejo ahi abajo -->
+    <menuitem name="Medicos" id="gestion_hospital.hospital_medico_menu" parent="gestion_hospital.hospital_base_menu" action="gestion_hospital.hospital_medico_action"/>
+    <menuitem name="Consultas" id="gestion_hospital.hospital_consulta_menu" parent="gestion_hospital.hospital_base_menu" action="gestion_hospital.hospital_consulta_action"/>
+</odoo>
+\end{lstlisting}
+
+Este archivo también hay que añadirlo al archivo "manifest".
 
 Si todo está correcto, actualizamos la lista de las aplicaciones y buscamos el nuevo creado y lo activamos.
 \begin{center}
@@ -916,7 +925,7 @@ Por otro lado tenemos el modelo médico que para crear el modelo y la vista es l
 from odoo import models, fields, api
 
 #Definimos modelo Biblioteca socio
-class BibliotecaComic(models.Model):
+class HospitalMedico(models.Model):
 
     #Nombre y descripcion del modelo
     _name = 'hospital.medico'
@@ -946,7 +955,7 @@ Ahora creamos la vista donde vamos a poder rellenar el formulario del médico, l
 <odoo>
 
     <!-- Definimos como mostramos la vista en el modelo -->
-    <record id='hospital_medico_action' model='ir.actions.act_window'>
+    <record id='gestion_hospital.hospital_medico_action' model='ir.actions.act_window'>
         <field name="name">Medico</field>
         <!-- Indicamos a que modelo aplica -->
         <field name="res_model">hospital.medico</field>
@@ -956,7 +965,7 @@ Ahora creamos la vista donde vamos a poder rellenar el formulario del médico, l
     </record>
 
     <!-- Definirde la Vista formulario -->
-    <record id="hospital_medico_view_form" model="ir.ui.view">
+    <record id="gestion_hospital.hospital_medico_view_form" model="ir.ui.view">
         <field name="name">Formulario de los medicos del hospital</field>
         <field name="model">hospital.medico</field>
         <field name="arch" type="xml">
@@ -980,7 +989,7 @@ Ahora creamos la vista donde vamos a poder rellenar el formulario del médico, l
     </record>
 
     <!-- Definir de la vista list -->
-    <record id="hospital_medico_view_list" model="ir.ui.view">
+    <record id="gestion_hospital.hospital_medico_view_list" model="ir.ui.view">
         <field name="name">Lista de medicos del hospital</field>
         <field name="model">hospital.medico</field>
         <field name="arch" type="xml">
@@ -993,7 +1002,7 @@ Ahora creamos la vista donde vamos a poder rellenar el formulario del médico, l
     </record>
 
     <!-- Definir de la vista busqueda-->
-    <record id="hospital_medico_view_search" model="ir.ui.view">
+    <record id="gestion_hospital.hospital_medico_view_search" model="ir.ui.view">
         <field name="name">Busqueda de los Medicos</field>
         <field name="model">hospital.medico</field>
         <field name="arch" type="xml">
@@ -1063,7 +1072,121 @@ Y vemos como se lista ese médico creado.
 
 \subsection{Modelo Consulta}
 
+Para crear el modelo Consulta vamos a seguir los mismos pasos que los apartados anteriores, solo hay que tener en cuenta que en esta vista vamos a tener en cuenta la relación entre los Médicos y los Pacientes. En este caso, los médicos pueden realizar consultas a varios clientes y varios clientes pueden tener consultas con varios médicos.
 
+Primero vamos a crear el archivo modelo que va a tener la siguente estructura con los atributos: identificador y nombre del médico, identificador y nombre del paciente, sintomas y la fecha de la consulta.
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+# -*- coding: utf-8 -*-
+from odoo import models, fields, api
+
+#Definimos modelo hospital consulta
+class HospitalConsulta(models.Model):
+
+    #Nombre y descripcion del modelo
+    _name = 'hospital.consulta'
+    #Hereda de "base.archive"
+    _inherit = ['base.archive']
+    _description = 'Consultas del hospital'
+
+    #ATRIBUTOS
+    id_medico = fields.Many2one('hospital.medico',string='Medico',required=True)
+    id_paciente = fields.Many2one('hospital.paciente',string='Paciente',required=True)
+    nombre_medico = fields.Char(string='Medico',related='id_medico.nombre',store=True)
+    nombre_paciente = fields.Char(string='Paciente',related='id_paciente.nombre',store=True)
+
+    sintoma = fields.Text(string='Sintomas',required=True)
+    fecha = fields.Datetime(string='Fecha de la consulta',default=fields.Datetime.now,required=True)
+
+    _rec_name = 'nombre_medico' 
+\end{lstlisting}
+
+Creamos la vista del modelo Consulta con la siguiente estrcutura y los atributos anteriores creados: 
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Definimos como mostramos la vista en el modelo -->
+    <record id='gestion_hospital.hospital_consulta_action' model='ir.actions.act_window'>
+        <field name="name">Consultas</field>
+        <!-- Indicamos a que modelo aplica -->
+        <field name="res_model">hospital.consulta</field>
+        <!-- Indicamos que los socios pueden verse en list para el listado,
+            y en form para la creacion/edicion -->
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Definir de la Vista formulario -->
+    <record id="gestion_hospital.hospital_consulta_view_form" model="ir.ui.view">
+        <field name="name">Formulario de consulta</field>
+        <field name="model">hospital.consulta</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                    <!-- Atributos del medico -->
+                        <field name="id_medico"/>
+                        <field name="nombre_medico"/>
+                        <field name="fecha"/>
+                    </group>
+                    <group>
+                    <!-- Atributos del paciente -->
+                        <field name="id_paciente"/>
+                        <field name="nombre_paciente"/>
+                        <field name="sintoma"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Definir de la vista list -->
+    <record id="gestion_hospital.hospital_consulta_view_list" model="ir.ui.view">
+        <field name="name">Lista de consultas</field>
+        <field name="model">hospital.consulta</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="nombre_medico"/>
+                <field name="fecha"/>                        
+                <field name="nombre_paciente"/>
+                <field name="sintoma"/>                        
+            </list>
+        </field>
+    </record>
+</odoo>
+\end{lstlisting}
+
+Es importante importar el modelo en el archivo "init" de la carpeta modelo, añadir la vista en el "manifest" y en el archivo de seguridad los permisos como en las anteriores vistas.
+
+Si todo está correcto, actualizamos el módulo y deberíamos poder ver el nuevo apartado "Consultas" con sus respectivos atributos. 
+
+\begin{center}
+    \includegraphics[height=3.5cm]{images/modulo36.png}
+\end{center}
+
+Ahora vamos a crear un ejemplo donde, un médico tiene varias consultas con pacientes distintos. Aquí un ejemplo visual de como se crea una consulta.
+
+\begin{center}
+    \includegraphics[height=4cm]{images/modulo37.png}
+\end{center}
+
+Y aquí vemos que el médico Daniel tiene dos consultas con dos pacientes diferentes en distintas fechas con sus respectivos síntomas. Y pasaría lo mismo si un paciente en este caso Andrea quiere tener varias citas con médicos diferentes.
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=5cm]{images/modulo38.png}
+\end{center}
+
+
+\subsection{Errores encontrados}
+
+Me daban algunos errores al crear la nueva vista Consulta, porque yo antes creaba las vistas del menú en la vista paciente que es la principal. Busqué y recomendaban crear un nuevo archivo exclusivamente para el menú del módulo. Creé y separé los menús en otro apartado y ya solucioné los problemas que tenía.
+
+
+\vspace{1.5cm}
 \section{Actividad 04 - Módulo Colegio }
 El objetivo de la primera actividad 
 
