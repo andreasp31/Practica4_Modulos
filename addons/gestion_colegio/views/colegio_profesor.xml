@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Acción para Profesor -->
+    <record id='gestion_colegio.colegio_profesor_action' model='ir.actions.act_window'>
+        <field name="name">Profesor del colegio</field>
+        <field name="res_model">colegio.profesor</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Vista de lista de profesor -->
+    <record id="gestion_colegio.colegio_profesor_view_list" model="ir.ui.view">
+        <field name="name">Lista de Profesores</field>
+        <field name="model">colegio.profesor</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="nombre"/>
+                <field name="apellidos"/>
+                <field name="dni"/>
+                <field name="email"/>
+                <field name="telefono"/>
+                <field name="fecha_contratacion"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vista de formulario de Profesor -->
+    <record id="gestion_colegio.colegio_profesor_view_form" model="ir.ui.view">
+        <field name="name">Formulario de Profesor</field>
+        <field name="model">colegio.profesor</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="nombre"/>
+                            <field name="apellidos"/>
+                            <field name="dni"/>
+                        </group>
+                        <group>
+                            <field name="email"/>
+                            <field name="telefono"/>
+                            <field name="fecha_contratacion"/>
+                        </group>
+                    </group>
+                    <field name="id_modulo">
+                        <list>
+                            <field name="nombre"/>
+                            <field name="codigo_modulo"/>
+                            <field name="creditos"/>
+                            <field name="curso"/>
+                            <field name="id_ciclo"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista de búsqueda de profesor -->
+    <record id="gestion_colegio.colegio_profesor_view_search" model="ir.ui.view">
+        <field name="name">Búsqueda de Profesor</field>
+        <field name="model">colegio.profesor</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nombre"/>
+                <field name="apellidos"/>
+                <field name="dni"/>
+                <field name="email"/>
+            </search>
+        </field>
+    </record>
+</odoo>

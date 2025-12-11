@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.26)  10 DEC 2025 19:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.26)  11 DEC 2025 18:38
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -359,69 +359,68 @@ File: lstlang1.sty 2024/09/23 1.10c listings language file
 )
 
 [3]
-<images/modulo1.png, id=135, 1444.64719pt x 228.855pt>
+<images/modulo1.png, id=158, 1444.64719pt x 228.855pt>
 File: images/modulo1.png Graphic file (type png)
 <use images/modulo1.png>
-Package pdftex.def Info: images/modulo1.png  used on input line 164.
+Package pdftex.def Info: images/modulo1.png  used on input line 167.
 (pdftex.def)             Requested size: 413.09543pt x 65.44142pt.
 
 
 [4 <./images/modulo1.png>]
 
 [5]
-<images/calendario3.png, id=220, 849.92531pt x 232.61906pt>
-File: images/calendario3.png Graphic file (type png)
-<use images/calendario3.png>
-Package pdftex.def Info: images/calendario3.png  used on input line 282.
-(pdftex.def)             Requested size: 415.83157pt x 113.81102pt.
-
 
 [6]
-<images/calendario1.png, id=266, 558.58687pt x 569.87906pt>
+<images/calendario3.png, id=292, 849.92531pt x 232.61906pt>
+File: images/calendario3.png Graphic file (type png)
+<use images/calendario3.png>
+Package pdftex.def Info: images/calendario3.png  used on input line 285.
+(pdftex.def)             Requested size: 415.83157pt x 113.81102pt.
+<images/calendario1.png, id=293, 558.58687pt x 569.87906pt>
 File: images/calendario1.png Graphic file (type png)
 <use images/calendario1.png>
-Package pdftex.def Info: images/calendario1.png  used on input line 287.
+Package pdftex.def Info: images/calendario1.png  used on input line 290.
 (pdftex.def)             Requested size: 278.88362pt x 284.52756pt.
-<images/calendario2.png, id=267, 1329.46687pt x 602.25pt>
+<images/calendario2.png, id=294, 1329.46687pt x 602.25pt>
 File: images/calendario2.png Graphic file (type png)
 <use images/calendario2.png>
-Package pdftex.def Info: images/calendario2.png  used on input line 292.
+Package pdftex.def Info: images/calendario2.png  used on input line 295.
 (pdftex.def)             Requested size: 376.85312pt x 170.71652pt.
 
 
-[7 <./images/calendario3.png> <./images/calendario1.png> <./images/calendario2.png>]
-<images/error1.png, id=276, 883.80188pt x 552.56438pt>
+[7 <./images/calendario3.png> <./images/calendario1.png>]
+<images/error1.png, id=304, 883.80188pt x 552.56438pt>
 File: images/error1.png Graphic file (type png)
 <use images/error1.png>
-Package pdftex.def Info: images/error1.png  used on input line 302.
+Package pdftex.def Info: images/error1.png  used on input line 305.
 (pdftex.def)             Requested size: 364.06032pt x 227.62204pt.
-<images/modulo21.png, id=277, 215.30438pt x 277.78781pt>
+<images/modulo21.png, id=305, 215.30438pt x 277.78781pt>
 File: images/modulo21.png Graphic file (type png)
 <use images/modulo21.png>
-Package pdftex.def Info: images/modulo21.png  used on input line 311.
+Package pdftex.def Info: images/modulo21.png  used on input line 314.
 (pdftex.def)             Requested size: 143.34315pt x 184.9429pt.
 
 
-[8 <./images/error1.png> <./images/modulo21.png>]
-<images/modulo22.png, id=284, 341.02406pt x 95.6072pt>
+[8 <./images/calendario2.png> <./images/error1.png>]
+<images/modulo22.png, id=312, 341.02406pt x 95.6072pt>
 File: images/modulo22.png Graphic file (type png)
 <use images/modulo22.png>
-Package pdftex.def Info: images/modulo22.png  used on input line 317.
+Package pdftex.def Info: images/modulo22.png  used on input line 320.
 (pdftex.def)             Requested size: 405.97456pt x 113.81102pt.
-<images/modulo23.png, id=285, 679.03688pt x 239.39438pt>
+<images/modulo23.png, id=313, 679.03688pt x 239.39438pt>
 File: images/modulo23.png Graphic file (type png)
 <use images/modulo23.png>
-Package pdftex.def Info: images/modulo23.png  used on input line 323.
+Package pdftex.def Info: images/modulo23.png  used on input line 326.
 (pdftex.def)             Requested size: 484.23325pt x 170.71652pt.
 
-Overfull \hbox (28.98914pt too wide) in paragraph at lines 323--324
+Overfull \hbox (28.98914pt too wide) in paragraph at lines 326--327
  [] 
  []
 
 
 
-[9 <./images/modulo22.png> <./images/modulo23.png>]
-Overfull \hbox (1.3888pt too wide) in paragraph at lines 357--358
+[9 <./images/modulo21.png> <./images/modulo22.png> <./images/modulo23.png>]
+Overfull \hbox (1.3888pt too wide) in paragraph at lines 360--361
 []\T1/cmr/m/n/12 Ahora en el archivo "init" de la car-peta mod-els, im-por-ta-mos el nuevo archivo que acabamos
  []
 
@@ -430,153 +429,225 @@ Overfull \hbox (1.3888pt too wide) in paragraph at lines 357--358
 [10]
 
 [11]
-<images/modulo24.png, id=413, 342.5297pt x 114.4275pt>
+<images/modulo24.png, id=431, 342.5297pt x 114.4275pt>
 File: images/modulo24.png Graphic file (type png)
 <use images/modulo24.png>
-Package pdftex.def Info: images/modulo24.png  used on input line 474.
+Package pdftex.def Info: images/modulo24.png  used on input line 477.
 (pdftex.def)             Requested size: 255.52205pt x 85.35826pt.
-<images/modulo25.png, id=414, 710.655pt x 243.91125pt>
+<images/modulo25.png, id=432, 710.655pt x 243.91125pt>
 File: images/modulo25.png Graphic file (type png)
 <use images/modulo25.png>
-Package pdftex.def Info: images/modulo25.png  used on input line 480.
+Package pdftex.def Info: images/modulo25.png  used on input line 483.
 (pdftex.def)             Requested size: 414.50073pt x 142.26378pt.
-<images/modulo26.png, id=415, 450.9347pt x 256.70906pt>
+<images/modulo26.png, id=433, 450.9347pt x 256.70906pt>
 File: images/modulo26.png Graphic file (type png)
 <use images/modulo26.png>
-Package pdftex.def Info: images/modulo26.png  used on input line 486.
+Package pdftex.def Info: images/modulo26.png  used on input line 489.
 (pdftex.def)             Requested size: 249.90016pt x 142.26378pt.
-<images/modulo27.png, id=416, 639.13782pt x 171.64125pt>
+
+
+[12 <./images/modulo24.png> <./images/modulo25.png>]
+<images/modulo27.png, id=458, 639.13782pt x 171.64125pt>
 File: images/modulo27.png Graphic file (type png)
 <use images/modulo27.png>
-Package pdftex.def Info: images/modulo27.png  used on input line 492.
+Package pdftex.def Info: images/modulo27.png  used on input line 495.
 (pdftex.def)             Requested size: 423.79251pt x 113.81102pt.
-
-
-[12 <./images/modulo24.png> <./images/modulo25.png> <./images/modulo26.png>]
-<images/error2.png, id=431, 732.48656pt x 520.19344pt>
+<images/error2.png, id=459, 732.48656pt x 520.19344pt>
 File: images/error2.png Graphic file (type png)
 <use images/error2.png>
-Package pdftex.def Info: images/error2.png  used on input line 506.
+Package pdftex.def Info: images/error2.png  used on input line 509.
 (pdftex.def)             Requested size: 360.57571pt x 256.0748pt.
 
 
-[13 <./images/modulo27.png> <./images/error2.png>]
+[13 <./images/modulo26.png> <./images/modulo27.png>]
 
-[14]
+[14 <./images/error2.png>]
 
 [15]
 
 [16]
-<images/modulo28.png, id=589, 746.03719pt x 398.99063pt>
+<images/modulo28.png, id=601, 746.03719pt x 398.99063pt>
 File: images/modulo28.png Graphic file (type png)
 <use images/modulo28.png>
-Package pdftex.def Info: images/modulo28.png  used on input line 689.
+Package pdftex.def Info: images/modulo28.png  used on input line 692.
 (pdftex.def)             Requested size: 452.21335pt x 241.84842pt.
-<images/modulo29.png, id=590, 645.91313pt x 443.40656pt>
+
+
+[17]
+<images/modulo29.png, id=626, 645.91313pt x 443.40656pt>
 File: images/modulo29.png Graphic file (type png)
 <use images/modulo29.png>
-Package pdftex.def Info: images/modulo29.png  used on input line 696.
+Package pdftex.def Info: images/modulo29.png  used on input line 699.
 (pdftex.def)             Requested size: 352.30643pt x 241.84842pt.
-
-
-[17 <./images/modulo28.png> <./images/modulo29.png>]
-<images/modulo291.png, id=600, 763.35187pt x 319.1925pt>
+<images/modulo291.png, id=627, 763.35187pt x 319.1925pt>
 File: images/modulo291.png Graphic file (type png)
 <use images/modulo291.png>
-Package pdftex.def Info: images/modulo291.png  used on input line 703.
+Package pdftex.def Info: images/modulo291.png  used on input line 706.
 (pdftex.def)             Requested size: 442.29013pt x 184.9429pt.
 
 
-[18 <./images/modulo291.png>]
+[18 <./images/modulo28.png> <./images/modulo29.png>]
 
-[19]
+[19 <./images/modulo291.png>]
 
 [20]
-<images/modulo30.png, id=730, 261.97874pt x 99.37125pt>
+
+[21]
+<images/modulo30.png, id=765, 261.97874pt x 99.37125pt>
 File: images/modulo30.png Graphic file (type png)
 <use images/modulo30.png>
-Package pdftex.def Info: images/modulo30.png  used on input line 899.
+Package pdftex.def Info: images/modulo30.png  used on input line 902.
 (pdftex.def)             Requested size: 225.04149pt x 85.35826pt.
 
 
-[21]
-<images/modulo31.png, id=768, 697.8572pt x 183.68625pt>
+[22]
+<images/modulo31.png, id=801, 697.8572pt x 183.68625pt>
 File: images/modulo31.png Graphic file (type png)
 <use images/modulo31.png>
-Package pdftex.def Info: images/modulo31.png  used on input line 905.
+Package pdftex.def Info: images/modulo31.png  used on input line 908.
 (pdftex.def)             Requested size: 432.40077pt x 113.81102pt.
-<images/modelo32.png, id=769, 345.54094pt x 251.43938pt>
+<images/modelo32.png, id=802, 345.54094pt x 251.43938pt>
 File: images/modelo32.png Graphic file (type png)
 <use images/modelo32.png>
-Package pdftex.def Info: images/modelo32.png  used on input line 910.
+Package pdftex.def Info: images/modelo32.png  used on input line 913.
 (pdftex.def)             Requested size: 234.60619pt x 170.71652pt.
-<images/modelo33.png, id=770, 603.75563pt x 200.24812pt>
+<images/modelo33.png, id=803, 603.75563pt x 200.24812pt>
 File: images/modelo33.png Graphic file (type png)
 <use images/modelo33.png>
-Package pdftex.def Info: images/modelo33.png  used on input line 916.
+Package pdftex.def Info: images/modelo33.png  used on input line 919.
 (pdftex.def)             Requested size: 428.95508pt x 142.26378pt.
 
 
-[22 <./images/modulo30.png> <./images/modulo31.png> <./images/modelo32.png> <./images/modelo33.png>]
-
-[23]
+[23 <./images/modulo30.png> <./images/modulo31.png> <./images/modelo32.png> <./images/modelo33.png>]
 
 [24]
-<images/modulo34.png, id=887, 413.29407pt x 261.22594pt>
+
+[25]
+<images/modulo34.png, id=921, 413.29407pt x 261.22594pt>
 File: images/modulo34.png Graphic file (type png)
 <use images/modulo34.png>
-Package pdftex.def Info: images/modulo34.png  used on input line 1064.
+Package pdftex.def Info: images/modulo34.png  used on input line 1067.
 (pdftex.def)             Requested size: 270.10103pt x 170.71652pt.
-<images/modulo35.png, id=888, 624.08156pt x 170.13562pt>
+<images/modulo35.png, id=922, 624.08156pt x 170.13562pt>
 File: images/modulo35.png Graphic file (type png)
 <use images/modulo35.png>
-Package pdftex.def Info: images/modulo35.png  used on input line 1069.
+Package pdftex.def Info: images/modulo35.png  used on input line 1072.
 (pdftex.def)             Requested size: 417.4754pt x 113.81102pt.
 
 
-[25 <./images/modulo34.png> <./images/modulo35.png>]
+[26 <./images/modulo34.png> <./images/modulo35.png>]
 
-[26]
-<images/modulo36.png, id=955, 677.53125pt x 155.07938pt>
+[27]
+<images/modulo36.png, id=988, 677.53125pt x 155.07938pt>
 File: images/modulo36.png Graphic file (type png)
 <use images/modulo36.png>
-Package pdftex.def Info: images/modulo36.png  used on input line 1167.
+Package pdftex.def Info: images/modulo36.png  used on input line 1170.
 (pdftex.def)             Requested size: 435.07622pt x 99.58464pt.
-<images/modulo37.png, id=956, 716.6775pt x 216.81pt>
+<images/modulo37.png, id=989, 716.6775pt x 216.81pt>
 File: images/modulo37.png Graphic file (type png)
 <use images/modulo37.png>
-Package pdftex.def Info: images/modulo37.png  used on input line 1173.
+Package pdftex.def Info: images/modulo37.png  used on input line 1176.
 (pdftex.def)             Requested size: 376.20665pt x 113.81102pt.
 
 
-[27 <./images/modulo36.png>]
-<images/modulo38.png, id=998, 637.63219pt x 213.04594pt>
+[28 <./images/modulo36.png>]
+<images/modulo38.png, id=1031, 637.63219pt x 213.04594pt>
 File: images/modulo38.png Graphic file (type png)
 <use images/modulo38.png>
-Package pdftex.def Info: images/modulo38.png  used on input line 1180.
+Package pdftex.def Info: images/modulo38.png  used on input line 1183.
 (pdftex.def)             Requested size: 425.8103pt x 142.26378pt.
 
 
-[28 <./images/modulo37.png> <./images/modulo38.png>] (documentacion1_4.aux)
+[29 <./images/modulo37.png> <./images/modulo38.png>]
+
+[30]
+
+[31]
+
+[32]
+<images/modulo40.png, id=1169, 301.8778pt x 107.65219pt>
+File: images/modulo40.png Graphic file (type png)
+<use images/modulo40.png>
+Package pdftex.def Info: images/modulo40.png  used on input line 1368.
+(pdftex.def)             Requested size: 319.1552pt x 113.81102pt.
+<images/modulo41.png, id=1170, 920.68968pt x 299.61937pt>
+File: images/modulo41.png Graphic file (type png)
+<use images/modulo41.png>
+Package pdftex.def Info: images/modulo41.png  used on input line 1375.
+(pdftex.def)             Requested size: 437.16356pt x 142.26378pt.
+<images/modulo45.png, id=1171, 976.39781pt x 319.1925pt>
+File: images/modulo45.png Graphic file (type png)
+<use images/modulo45.png>
+Package pdftex.def Info: images/modulo45.png  used on input line 1382.
+(pdftex.def)             Requested size: 435.17355pt x 142.26378pt.
+<images/modulo46.png, id=1172, 737.75626pt x 337.26pt>
+File: images/modulo46.png Graphic file (type png)
+<use images/modulo46.png>
+Package pdftex.def Info: images/modulo46.png  used on input line 1389.
+(pdftex.def)             Requested size: 373.44766pt x 170.71652pt.
+
+
+[33 <./images/modulo40.png> <./images/modulo41.png> <./images/modulo45.png>]
+
+[34 <./images/modulo46.png>]
+
+[35]
+<images/modulo43.png, id=1274, 913.16156pt x 335.75438pt>
+File: images/modulo43.png Graphic file (type png)
+<use images/modulo43.png>
+Package pdftex.def Info: images/modulo43.png  used on input line 1511.
+(pdftex.def)             Requested size: 425.60503pt x 156.49014pt.
+<images/modulo47.png, id=1275, 1089.31969pt x 163.3603pt>
+File: images/modulo47.png Graphic file (type png)
+<use images/modulo47.png>
+Package pdftex.def Info: images/modulo47.png  used on input line 1518.
+(pdftex.def)             Requested size: 455.33371pt x 68.28644pt.
+
+
+[36 <./images/modulo43.png> <./images/modulo47.png>]
+
+[37]
+
+[38]
+<images/modulo44.png, id=1409, 1107.38719pt x 367.3725pt>
+File: images/modulo44.png Graphic file (type png)
+<use images/modulo44.png>
+Package pdftex.def Info: images/modulo44.png  used on input line 1642.
+(pdftex.def)             Requested size: 428.83775pt x 142.26378pt.
+
+
+[39 <./images/modulo44.png>]
+
+[40]
+<images/modulo42.png, id=1500, 922.19531pt x 272.51813pt>
+File: images/modulo42.png Graphic file (type png)
+<use images/modulo42.png>
+Package pdftex.def Info: images/modulo42.png  used on input line 1766.
+(pdftex.def)             Requested size: 433.27707pt x 128.0374pt.
+
+
+[41 <./images/modulo42.png>]
+
+[42] (documentacion1_4.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-09-02>
  ***********
 Package rerunfilecheck Info: File `documentacion1_4.out' has not changed.
-(rerunfilecheck)             Checksum: 3750F995E8B8ED55C82289F26AB79C2B;3018.
+(rerunfilecheck)             Checksum: B6D97D0C0204C215CBA199D24ED6CEF0;4040.
  ) 
 Here is how much of TeX's memory you used:
- 13679 strings out of 468130
- 210817 string characters out of 5430633
- 1191001 words of memory out of 5000000
- 41369 multiletter control sequences out of 15000+600000
+ 14254 strings out of 468130
+ 220290 string characters out of 5430633
+ 1187656 words of memory out of 5000000
+ 41501 multiletter control sequences out of 15000+600000
  636225 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,7n,79p,676b,2131s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 69i,7n,79p,678b,2196s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tctt1000.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1000.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0600.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk>
-Output written on documentacion1_4.pdf (28 pages, 663857 bytes).
+Output written on documentacion1_4.pdf (42 pages, 904657 bytes).
 PDF statistics:
- 1489 PDF objects out of 1728 (max. 8388607)
- 799 named destinations out of 1000 (max. 500000)
- 270 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2109 PDF objects out of 2487 (max. 8388607)
+ 1242 named destinations out of 1440 (max. 500000)
+ 366 words of extra memory for PDF output out of 10000 (max. 10000000)
 

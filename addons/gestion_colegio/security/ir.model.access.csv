@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_colegio_ciclo_director,access_colegio_ciclo_director,model_colegio_ciclo,gestion_colegio.group_director,1,1,1,1
+access_colegio_modulo_director,access_colegio_modulo_director,model_colegio_modulo,gestion_colegio.group_director,1,1,1,1
+access_colegio_alumno_director,access_colegio_alumno_director,model_colegio_alumno,gestion_colegio.group_director,1,1,1,1
+access_colegio_profesor_director,access_colegio_profesor_director,model_colegio_profesor,gestion_colegio.group_director,1,1,1,1
+access_colegio_profesor_profesor,access_colegio_profesor_profesor,model_colegio_profesor,gestion_colegio.group_profesor,1,0,0,0

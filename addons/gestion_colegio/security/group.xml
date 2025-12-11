@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Grupo para Directores (acceso completo) -->
+    <record id="group_director" model="res.groups">
+        <field name="name">Director</field>
+        <field name="category_id" ref="base.module_category_services"/>
+        <!-- Asigna el usuario admin como director inicial -->
+        <field name="users" eval="[(4, ref('base.user_admin'))]" />
+    </record>
+    
+    <!-- Grupo para Profesores (solo lectura de profesores) -->
+    <record id="group_profesor" model="res.groups">
+        <field name="name">Profesor</field>
+        <field name="category_id" ref="base.module_category_services"/>
+    </record>
+</odoo>

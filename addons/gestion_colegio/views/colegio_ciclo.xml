@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Acción para Ciclos -->
+    <record id='gestion_colegio.colegio_ciclo_action' model='ir.actions.act_window'>
+        <field name="name">Ciclos Formativos</field>
+        <field name="res_model">colegio.ciclo</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Vista lista de Ciclos -->
+    <record id="gestion_colegio.colegio_ciclo_view_list" model="ir.ui.view">
+        <field name="name">Lista de Ciclos Formativos</field>
+        <field name="model">colegio.ciclo</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="nombre"/>
+                <field name="codigo_ciclo"/>
+                <field name="descripcion"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vista formulario de Ciclos -->
+    <record id="gestion_colegio.colegio_ciclo_view_form" model="ir.ui.view">
+        <field name="name">Formulario de Ciclo Formativo</field>
+        <field name="model">colegio.ciclo</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="nombre"/>
+                            <field name="codigo_ciclo"/>
+                        </group>
+                        <group>
+                            <field name="descripcion" widget="html"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Módulos">
+                            <field name="id_modulos">
+                                <list>
+                                    <field name="nombre"/>
+                                    <field name="codigo_modulo"/>
+                                    <field name="horas"/>
+                                    <field name="creditos"/>
+                                    <field name="curso"/>
+                                    <field name="id_profesor" widget="many2one"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista búsqueda de Ciclos -->
+    <record id="gestion_colegio.colegio_ciclo_view_search" model="ir.ui.view">
+        <field name="name">Búsqueda de Ciclos</field>
+        <field name="model">colegio.ciclo</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nombre"/>
+                <field name="codigo_ciclo"/>
+                <field name="descripcion"/>
+            </search>
+        </field>
+    </record>
+</odoo>

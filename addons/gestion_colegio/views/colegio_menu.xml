@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menú principal -->
+    <menuitem name="Colegio" id="gestion_colegio.colegio_menu"/>
+    
+    <!-- Submenús -->
+    <menuitem name="Ciclos Formativos" 
+              id="gestion_colegio.menu_ciclos" 
+              parent="gestion_colegio.colegio_menu" 
+              action="gestion_colegio.colegio_ciclo_action"/>
+    
+    <menuitem name="Módulos" 
+              id="gestion_colegio.menu_modulos" 
+              parent="gestion_colegio.colegio_menu" 
+              action="gestion_colegio.colegio_modulo_action"/>
+    
+    <menuitem name="Alumnos" 
+              id="gestion_colegio.menu_alumnos" 
+              parent="gestion_colegio.colegio_menu" 
+              action="gestion_colegio.colegio_alumno_action"/>
+    
+    <menuitem name="Profesores" 
+              id="gestion_colegio.menu_profesores" 
+              parent="gestion_colegio.colegio_menu" 
+              action="gestion_colegio.colegio_profesor_action"/>
+</odoo>

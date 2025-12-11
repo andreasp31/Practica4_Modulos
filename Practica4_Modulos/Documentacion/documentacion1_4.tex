@@ -71,10 +71,11 @@
     \item Modelo Consulta
     \item Errores encontrados 
     \end{itemize}
-    \item Actividad 04 ....................................................................................... página 28
+    \item Actividad 04 -  Módulo Colegio ............................................................ página 28
     \begin{itemize}
     \item Crear 4 modelos (Ciclo Formativo, Módulo, Alumno y Profesor)
     \item Implementar los modelos, relaciones y vistas necesarias
+    \item Configuración de seguridad
     \item Errores encontrados 
     \end{itemize}
     \item Conclusiones ....................................................................................... página 12
@@ -84,7 +85,9 @@
 
 \section{Introducción}
 
-El objetivo de la práctica es crear y modificar módulos para seguir adquiriendo conceptos y ser capaces de crear módulos por nuestra cuenta
+El objetivo de la práctica es crear y modificar módulos para seguir adquiriendo conceptos y ser capaces de crear módulos por nuestra cuenta. Nos vamos a basar en ejemplos del 01 al 06 del repositorio que nos proporcionan en el enuncionado: \href{https://github.com/sergarb1/OdooModulosEjemplos}{repositorio de ejemplo}. Primero vamos a tener en cuenta que el primero ejercicio lo vamos a realizar en base al módulo de la práctica anterior de la "lista de tareas" por lo que vamos a seguir usando la práctica anterior.
+
+Hay que tener en cuenta que para ir viendo si funciona los módulos y sus respectivas vistas estén correctos tenemos que levantar el contenedor en docker, iniciar en Odoo con nuestros datos, actualizar la lista de aplicaciones y realizar lo que necesitemos: activar módulo, actualizar módulo, etc.
 
 
 \section{Actividad 01 - Lista Tareas}
@@ -1188,6 +1191,592 @@ Me daban algunos errores al crear la nueva vista Consulta, porque yo antes creab
 
 \vspace{1.5cm}
 \section{Actividad 04 - Módulo Colegio }
-El objetivo de la primera actividad 
+El objetivo de la última actividad es crear un módulo de Odoo con cuatro modelos:
+\begin{itemize}
+    \item Modelo Ciclo Formativo que puede estar asociado a uno o más de un módulo.
+    \item Modelo Módulo que pertenece a un ciclo formativo, tiene que tener alumnos matriculados y tener un profesor que imparta el módulo.
+    \item Modelo Alumno con sus atributos y se relaciona con los módulos a los que se matricule.
+    \item Modelo Profesor con sus atributos y se relaciona con los módulos a los que se matricule.
+\end{itemize}
+
+Vamos a empezar a crear una carpeta para el nuevo módulo con los archivos base que vamos a ir completando. Ahora vamos a tener en cuenta los atributos que vamos a crear para cada modelo y que relación van a tener:
+
+En el modelo "Ciclo Formativo" vamos a tener el atributo "id modulos" en el que la relación sea (One2many) por lo que 1 Ciclo puede tener varios Módulos (1:N).
+
+En el modelo "Módulos" vamos a tener el atributo "id ciclos" en la que la relación es (One2many) por lo que a 1 Módulo pertenece a un Ciclo (1:N). También necesitaremos el atributo "id profesor" que la relación tiene que ser (Many2one) en el que ese Módulo es impartido por un único profesor (N:1). Y el "id alumno" que tendrá una relación (Many2many) en el que un módulo tiene muchos alumnos y el alumno puede estar en varios módulos matriculados (N:M). 
+
+Después en el modelo "Alumno" vamos a necesitar tener por un lado el atributo "id modulos" con una relación de (Many2many) donde el alumno puedee estar en muchos módulos y un módulo tiene varios alumnos(N:M).
+
+Y en el modelo "Profesor" necesitamso el atributo "id modulos" con una relación de (One2many) donde el profesor imparte uno o muchos módulos(1:N).
+
+
+Tras ver que hay muchos atributos que se relacionan entre modelos es más cómodo realizar ya todos las vistas y modelos al mismo tiempo porque sino no van a funcionar la carga de la aplicación en Odoo yendo vista a vista para enseñar. Por lo que decidí crearlo todo de manera conjunta y ver que todo funciona al final de crear todas las vistas para ver que las relaciones se hacen correctamente.
+
+
+\subsection{Modelo Ciclo Formativo}
+
+Vamos a empezar creando el archivo módulo "Ciclo" con la siguiente estructura y los atributos que mencionamos ateriormente más los que creamos necesarios para el ciclo.
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+from odoo import models, fields, api
+
+class CicloFormativo(models.Model):
+    _name = 'colegio.ciclo'
+    _description = 'Ciclo Formativo'
+
+    nombre = fields.Char(string='Nombre del ciclo',required=True)
+    codigo_ciclo = fields.Char(string='Codigo',required=True)
+    descripcion = fields.Html(string='Descripcion')
+    id_modulos = fields.One2many('colegio.modulo','id_ciclo',string='Modulos')
+\end{lstlisting}
+
+Para la vista de ciclo nos interesa ver el formulario con los atributos que creamos y la opción de añadir los módulos que va a contener ese ciclo.
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Accion para Ciclos -->
+    <record id='gestion_colegio.colegio_ciclo_action' model='ir.actions.act_window'>
+        <field name="name">Ciclos Formativos</field>
+        <field name="res_model">colegio.ciclo</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Vista lista de Ciclos -->
+    <record id="gestion_colegio.colegio_ciclo_view_list" model="ir.ui.view">
+        <field name="name">Lista de Ciclos Formativos</field>
+        <field name="model">colegio.ciclo</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="nombre"/>
+                <field name="codigo_ciclo"/>
+                <field name="descripcion"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vista formulario de Ciclos -->
+    <record id="gestion_colegio.colegio_ciclo_view_form" model="ir.ui.view">
+        <field name="name">Formulario de Ciclo Formativo</field>
+        <field name="model">colegio.ciclo</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="nombre"/>
+                            <field name="codigo_ciclo"/>
+                        </group>
+                        <group>
+                            <field name="descripcion" widget="html"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Modulos">
+                            <field name="id_modulos">
+                                <list>
+                                    <field name="nombre"/>
+                                    <field name="codigo_modulo"/>
+                                    <field name="horas"/>
+                                    <field name="creditos"/>
+                                    <field name="curso"/>
+                                    <field name="id_profesor" widget="many2one"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista busqueda de Ciclos -->
+    <record id="gestion_colegio.colegio_ciclo_view_search" model="ir.ui.view">
+        <field name="name">Busqueda de Ciclos</field>
+        <field name="model">colegio.ciclo</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nombre"/>
+                <field name="codigo_ciclo"/>
+                <field name="descripcion"/>
+            </search>
+        </field>
+    </record>
+</odoo>
+\end{lstlisting}
+
+Luego de tener la vista la añadimos al archivo "manifest", importamos el modelo al archivo "init" de la carpeta "models" y añadirmos los permisos que consideramos por ahora, que posteriormente lo vamos a tener que cambiar.
+
+Aquí vemos como ya están todas las vistas, la parte de seguridad(que para el último apartado de la práctica vamos a tener que modificar) y nuestra vista con los menús.
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+# -*- coding: utf-8 -*-
+{
+    'name': "Gestion del Colegio Princesa de Espana",
+    'summary': """Gestion de ciclos formativos, modulos, alumnos y profesores""",
+    'description': """Modulo para la gestion completa de un instituto educativo:""",
+    'author': "Andrea Sofia Pais Dos Santos",
+    'application': True,
+    'category': 'Education',
+    'version': '0.1',
+    'depends': ['base'],
+    'data': [
+        # primero seguridad, luego vistas, luego menus
+        'security/group.xml',
+        'security/ir.model.access.csv',
+        
+        # Vistas en orden alfabetico para claridad
+        'views/colegio_ciclo.xml',
+        'views/colegio_modulo.xml',
+        'views/colegio_alumno.xml',
+        'views/colegio_profesor.xml',
+        
+        # Menus al final
+        'views/colegio_menu.xml',
+    ],
+}
+\end{lstlisting}
+
+Importamos en el archivo "init" todos los modelos que vamos a tener que crear.
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+# -*- coding: utf-8 -*-
+
+from . import colegio_ciclo
+from . import colegio_modulo
+from . import colegio_alumno
+from . import colegio_profesor
+\end{lstlisting}
+
+Y por ahora nuestro archivo "ir.model.access.csv" por ahora vamos a dar los siguientes permisos para que se vean nuestras vistas en Odoo.
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_colegio_ciclo_user,access_colegio_ciclo_user,model_colegio_ciclo,gestion_colegio.grupo_administrativos,1,1,1,1
+access_colegio_modulo_user,access_colegio_modulo_user,model_colegio_modulo,gestion_colegio.grupo_administrativos,1,1,1,1
+access_colegio_alumno_user,access_colegio_alumno_user,model_colegio_alumno,gestion_colegio.grupo_administrativos,1,1,1,1
+access_colegio_profesor_user,access_colegio_profesor_user,model_colegio_profesor,gestion_colegio.grupo_administrativos,1,1,1,1
+\end{lstlisting}
+
+Si todo está correcto, levantamos el contenedor de Docker y iniciamos en Odoo con nuestros datos. Actualizamos la lista de aplicaciones y activamos el módulo que acabamos de crear.
+
+\begin{center}
+    \includegraphics[height=4cm]{images/modulo40.png}
+\end{center}
+
+
+Ahora vamos a ver un ejemplo de como se crea un nuevo "Ciclo" con sus atributos y un ejemplo de módulo que creamos luego que sino no nos va a aparecer. Al tener el módulo activamos podemos ver las 4 vistas que teníamos que crear.
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=5cm]{images/modulo41.png}
+\end{center}
+
+
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=5cm]{images/modulo45.png}
+\end{center}
+
+Y nos permite acceder a la información de cada uno de los módulos que vayamos añadiendo al ciclo y vemos a que ciclo pertenece y que profesor imparte el módulo.
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=6cm]{images/modulo46.png}
+\end{center}
+
+
+\vspace{1.5cm}
+\subsection{Modelo Módulo}
+
+Para el modelo Módulo vamos a realizar el mismo procedimiento que para el modelo anterior, teniendo en cuenta los atributos que hemos definido con anterioridad con las relaciones que necesitamos y atributos que son relevantes para tener información suficiente de cada módulo como horas, créditos, curso al que pertenece, etc. Por lo que nuestro archivo "colegio modulo.py" va a estar estructurado de la siguiente forma: 
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+from odoo import models, fields, api
+
+class ColegioModulo(models.Model):
+    _name = 'colegio.modulo'
+    _description = 'Modulo'
+
+    nombre = fields.Char(string='Nombre',required=True)
+    codigo_modulo = fields.Char(string='Codigo',required=True)
+    horas = fields.Integer(string='Horas')
+    creditos = fields.Integer(string='Creditos')
+    curso = fields.Selection([
+        ('1',"Primero"),
+        ('2','Segundo')
+    ], string = 'Curso',required=True)
+    # relaciones que se necesitan 
+    id_ciclo = fields.Many2one('colegio.ciclo',string='Ciclo Formativo',required=True)
+    id_profesor = fields.Many2one('colegio.profesor',string='Profesor que imparte')
+    id_alumno = fields.Many2many('colegio.alumno',string='Alumnos matriculados')
+
+    # restriccion del codigo unico
+    _sql_constraints = [
+        ('codigo_modulo_uniq','UNIQUE(codigo_modulo,id_ciclo)','El codigo del modulo debe de ser unico')
+    ]
+\end{lstlisting}
+
+Luego creamos nuestra vista para crear, listar y buscar nuestros módulos y con los atributos hemos creado en el archivo modelo y nos interesa saber a que profesor lo va a impartir y a que ciclo y curso pertenece.
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Accion para Modulo -->
+    <record id='gestion_colegio.colegio_modulo_action' model='ir.actions.act_window'>
+        <field name="name">Modulos</field>
+        <field name="res_model">colegio.modulo</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Vista de lista de Modulo -->
+    <record id="gestion_colegio.colegio_modulo_view_list" model="ir.ui.view">
+        <field name="name">Lista de Modulos</field>
+        <field name="model">colegio.modulo</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="nombre"/>
+                <field name="codigo_modulo"/>
+                <field name="horas"/>
+                <field name="creditos"/>
+                <field name="curso"/>
+                <field name="id_ciclo"/>
+                <field name="id_profesor"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vista de formulario de Modulo -->
+    <record id="gestion_colegio.colegio_modulo_view_form" model="ir.ui.view">
+        <field name="name">Formulario de Modulo</field>
+        <field name="model">colegio.modulo</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="nombre"/>
+                            <field name="codigo_modulo"/>
+                            <field name="horas"/>
+                            <field name="creditos"/>
+                        </group>
+                        <group>
+                            <field name="curso"/>
+                            <field name="id_ciclo" widget="many2one"/>
+                            <field name="id_profesor" widget="many2one"/>
+                        </group>
+                    </group>
+                    <field name="id_alumno">
+                        <list>
+                            <field name="nombre"/>
+                            <field name="apellidos"/>
+                            <field name="dni"/>
+                            <field name="fecha_matriculacion"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista de busqueda de Modulo -->
+    <record id="gestion_colegio.colegio_modulo_view_search" model="ir.ui.view">
+        <field name="name">Busqueda de modulos</field>
+        <field name="model">colegio.modulo</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nombre"/>
+                <field name="codigo_modulo"/>
+                <field name="curso"/>
+                <field name="id_ciclo"/>
+                <field name="id_profesor"/>
+            </search>
+        </field>
+    </record>
+</odoo>
+\end{lstlisting}
+
+Luego hay que hacer lo mismo en toda creación de modelos y vistas, añadirlo al "manifest", importar el modelo al "init" de la carpeta models y añadir los permismos que consideremos. (Ya están completados en el anterior modelo)
+
+Ahora lo que nos interesa es realizar un ejemplo de como creamos un módulo que vemos los atributos del módulo, más a que ciclo pertenece, el profesor que lo imparte y una lista de los alumnos que pertenecen a ese módulo.
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=5.5cm]{images/modulo43.png}
+\end{center}
+
+Y así se vería la lista de los módulos.
+
+\vspace{0.3cm}
+\begin{center}
+    \includegraphics[height=2.4cm]{images/modulo47.png}
+\end{center}
+
+\subsection{Modelo Alumno}
+
+Para el modelo "Alumno" vamos a seguir los mismos pasos, lo único que cambia es que atributos necesita y los que tienen relación a otros modelos.
+
+El archivo "colegio alumno.py" va a estar estructurado de la siguiente manera en la que también vamos a restringir que el dni solo pueda tener 9 caracteres par evitar posibles errores. 
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+from odoo import models, fields, api
+from odoo.exceptions import ValidationError
+
+class ColegioAlumno(models.Model):
+    _name = 'colegio.alumno'
+    _description = 'Alumno del colegio'
+
+    nombre = fields.Char(string='Nombre',required=True)
+    apellidos = fields.Char(string='Apellidos',required=True)
+    dni = fields.Char(string='DNI del alumno/a',required=True)
+    fecha_nacimiento = fields.Date(string='Fecha de nacimiento',required=True)
+    telefono = fields.Char(string='Telefono del familiar')
+    fecha_matriculacion = fields.Date('Fecha de matriculacion',default=fields.Date.today)
+    # relaciones que se necesitan 
+    id_ciclo = fields.Many2one('colegio.ciclo',string='Ciclo matriculado')
+    id_modulo = fields.Many2many('colegio.modulo',string='Modulos matriculados')
+
+    # restriccion del dni unico
+    _sql_constraints = [
+        ('dni_uniq', 'UNIQUE(dni)', 'El DNI ya existe')
+    ]
+
+    @api.constrains('dni')
+    def _check_dni(self):
+        for colegio_alumno in self:
+            if colegio_alumno.dni and len(colegio_alumno.dni) != 9:
+                raise ValidationError('El DNI debe tener 9 caracteres')
+\end{lstlisting}
+
+Ahora vamos a crear la vista del alumno para crear, listar y buscarlos. Nos interesa enseñar al que ciclo pertenece el alumno y a que módulo lo vamos a matricular con su respectiva información.
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Accion para Alumno -->
+    <record id='gestion_colegio.colegio_alumno_action' model='ir.actions.act_window'>
+        <field name="name">Alumnos del colegio</field>
+        <field name="res_model">colegio.alumno</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Vista de lista de Alumno -->
+    <record id="gestion_colegio.colegio_alumno_view_list" model="ir.ui.view">
+        <field name="name">Lista de Alumnos</field>
+        <field name="model">colegio.alumno</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="nombre"/>
+                <field name="apellidos"/>
+                <field name="dni"/>
+                <field name="fecha_nacimiento"/>
+                <field name="telefono"/>
+                <field name="fecha_matriculacion"/>
+                <field name="id_ciclo"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vista de formulario de Alumno -->
+    <record id="gestion_colegio.colegio_alumno_view_form" model="ir.ui.view">
+        <field name="name">Formulario de Alumno</field>
+        <field name="model">colegio.alumno</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="nombre"/>
+                            <field name="apellidos"/>
+                            <field name="dni"/>
+                            <field name="fecha_nacimiento"/>
+                        </group>
+                        <group>
+                            <field name="id_ciclo" widget="many2one"/>
+                            <field name="fecha_matriculacion"/>
+                        </group>
+                    </group>
+                    <field name="id_modulo">
+                        <list>
+                            <field name="nombre"/>
+                            <field name="codigo_modulo"/>
+                            <field name="creditos"/>
+                            <field name="id_profesor"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista de busqueda de Alumno -->
+    <record id="gestion_colegio.colegio_alumno_view_search" model="ir.ui.view">
+        <field name="name">Busqueda de Alumno</field>
+        <field name="model">colegio.alumno</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nombre"/>
+                <field name="apellidos"/>
+                <field name="dni"/>
+                <field name="id_ciclo"/>
+            </search>
+        </field>
+    </record>
+</odoo>
+\end{lstlisting}
+
+Luego hay que hacer lo mismo en toda creación de modelos y vistas, añadirlo al "manifest", importar el modelo al "init" de la carpeta models y añadir los permismos que consideremos. (Ya están completados en el anterior modelo)
+
+Ahora lo que nos interesa es realizar un ejemplo de como creamos un Alumno con sus atributos, a que ciclo está matriculado y al módulo que se va a matricular.
+
+\vspace{0.3cm}
+\begin{center}
+    \includegraphics[height=5cm]{images/modulo44.png}
+\end{center}
+
+\subsection{Modelo Profesor}
+
+Para el modelo "Profesor" vamos a seguir los mismos pasos, lo único que cambia es que atributos que va a necesita y los que tienen relación a otros modelos.
+
+El archivo "colegio profesor.py" va a estar estructurado de la siguiente manera en la que también vamos a restringir que el dni solo pueda tener 9 caracteres par evitar posibles errores. 
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+from odoo import models, fields, api
+from odoo.exceptions import ValidationError
+
+class ColegioProfesor(models.Model):
+    _name = 'colegio.profesor'
+    _description = 'Profesor del colegio'
+
+    nombre = fields.Char(string='Nombre',required=True)
+    apellidos = fields.Char(string='Apellidos',required=True)
+    dni = fields.Char(string='DNI del profesor/a',required=True)
+    email = fields.Char(string='Email del colegio',required=True)
+    telefono = fields.Char(string='Telefono')
+    fecha_contratacion = fields.Date('Fecha de contratacion',default=fields.Date.today)
+    # relaciones que se necesitan 
+    id_modulo = fields.One2many('colegio.modulo','id_profesor',string='Modulos que imparte')
+
+    # restriccion del dni unico
+    _sql_constraints = [
+        ('dni_uniq', 'UNIQUE(dni)', 'El DNI ya existe'),
+        ('email_uniq','UNIQUE(email)','El email ya existe')
+    ]
+
+    @api.constrains('dni')
+    def _check_dni(self):
+        for colegio_alumno in self:
+            if colegio_alumno.dni and len(colegio_alumno.dni) != 9:
+                raise ValidationError('El DNI debe tener 9 caracteres')
+\end{lstlisting}
+
+Ahora vamos a crear la vista del profesor para crear, listar y buscarlos. Nos interesa enseñar al módulo que imparte con sus respectivos datos y al ciclo que pertenece ese módulo.
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Accion para Profesor -->
+    <record id='gestion_colegio.colegio_profesor_action' model='ir.actions.act_window'>
+        <field name="name">Profesor del colegio</field>
+        <field name="res_model">colegio.profesor</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Vista de lista de profesor -->
+    <record id="gestion_colegio.colegio_profesor_view_list" model="ir.ui.view">
+        <field name="name">Lista de Profesores</field>
+        <field name="model">colegio.profesor</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="nombre"/>
+                <field name="apellidos"/>
+                <field name="dni"/>
+                <field name="email"/>
+                <field name="telefono"/>
+                <field name="fecha_contratacion"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vista de formulario de Profesor -->
+    <record id="gestion_colegio.colegio_profesor_view_form" model="ir.ui.view">
+        <field name="name">Formulario de Profesor</field>
+        <field name="model">colegio.profesor</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="nombre"/>
+                            <field name="apellidos"/>
+                            <field name="dni"/>
+                        </group>
+                        <group>
+                            <field name="email"/>
+                            <field name="telefono"/>
+                            <field name="fecha_contratacion"/>
+                        </group>
+                    </group>
+                    <field name="id_modulo">
+                        <list>
+                            <field name="nombre"/>
+                            <field name="codigo_modulo"/>
+                            <field name="creditos"/>
+                            <field name="curso"/>
+                            <field name="id_ciclo"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista de busqueda de profesor -->
+    <record id="gestion_colegio.colegio_profesor_view_search" model="ir.ui.view">
+        <field name="name">Busqueda de Profesor</field>
+        <field name="model">colegio.profesor</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nombre"/>
+                <field name="apellidos"/>
+                <field name="dni"/>
+                <field name="email"/>
+            </search>
+        </field>
+    </record>
+</odoo>
+\end{lstlisting}
+
+Luego hay que hacer lo mismo en toda creación de modelos y vistas, añadirlo al "manifest", importar el modelo al "init" de la carpeta models y añadir los permismos que consideremos. (Ya están completados en el anterior modelo)
+
+Ahora lo que nos interesa es realizar un ejemplo de como creamos un Profesor con sus atributos, al módulo que va a impartir.
+
+\vspace{0.3cm}
+\begin{center}
+    \includegraphics[height=4.5cm]{images/modulo42.png}
+\end{center}
+
+Ya se realizaron las cuatro modelos y sus pistas teniendo en cuenta las relaciones entre las entidades. 
+
+\subsection{Configuración de seguridad}
+
+El objetivo ahora es tras crear el módulo correctamente con sus vistas 
+
+\subsection{Errores encontrados}
+Los errores siguieron siendo los mismos, errores de sintaxis por usar por ejemplo singular en vez de plural o al revés. Porque al ser la base una "copia" de los anteriores actividades era más fácil no cometer errores, solo había que tener cuidado con hacer bien las relaciones que si están definidas antes se hace más llevadero. Algún error tuve con una relación pero era porque me equivoqué y sin querer la puse al revés. 
+
+Las advertencias de Odoo o los logs del contenedor, nos va indicando los errores y nos dan pistas para ver donde nos hemos equivocado.
+
+\section{Conclusiones}
 
 \end{document}
