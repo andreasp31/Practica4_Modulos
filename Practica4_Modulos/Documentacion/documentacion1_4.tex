@@ -78,7 +78,7 @@
     \item Configuración de seguridad
     \item Errores encontrados 
     \end{itemize}
-    \item Conclusiones ....................................................................................... página 12
+    \item Conclusiones ....................................................................................... página 44
 \end{enumerate}
 \newpage
 
@@ -1770,13 +1770,79 @@ Ya se realizaron las cuatro modelos y sus pistas teniendo en cuenta las relacion
 
 \subsection{Configuración de seguridad}
 
-El objetivo ahora es tras crear el módulo correctamente con sus vistas 
+El objetivo ahora es tras crear el módulo correctamente con sus vistas vamos a implementar dos roles: el de DIRECTOR (va a poder acceder a todo) y PROFESOR (solo tendrá permisos de lectura sobre las vistas). Para ello vamos a tener que modificar nuestros archivos de seguridad. Empezando por el archivo "group.xml".
+
+En el archivo "group.xml" vamos a crear 2 grupos, el grupo director que es el que va a estar por defecto y el grupo profesor.
+
+\vspace{2cm}
+\begin{lstlisting}[style=javascript]
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Grupo para Directores (acceso completo) -->
+    <record id="group_director" model="res.groups">
+        <field name="name">Director</field>
+        <field name="category_id" ref="base.module_category_services"/>
+        <!-- Asigna el usuario admin como director inicial -->
+        <field name="users" eval="[(4, ref('base.user_admin'))]" />
+    </record>
+    
+    <!-- Grupo para Profesores (solo lectura de profesores) -->
+    <record id="group_profesor" model="res.groups">
+        <field name="name">Profesor</field>
+        <field name="category_id" ref="base.module_category_services"/>
+    </record>
+</odoo>
+\end{lstlisting}
+
+Y ahora en el archivo "ir.model.access.csv" vamos a determinar los permismos que va a tener cada rol en cada vista. Y los usuarios normales no va a poder acceder a nada por lo que el módulo no aparecerá. El director podrá ver todo, modificar, elmiminar y crear mientras que el profesor solo podrá ver la vista profesor y no podrá modificar nada.
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+# permisos del grupo director
+access_colegio_ciclo_director,access_colegio_ciclo_director,model_colegio_ciclo,gestion_colegio.group_director,1,1,1,1
+access_colegio_modulo_director,access_colegio_modulo_director,model_colegio_modulo,gestion_colegio.group_director,1,1,1,1
+access_colegio_alumno_director,access_colegio_alumno_director,model_colegio_alumno,gestion_colegio.group_director,1,1,1,1
+access_colegio_profesor_director,access_colegio_profesor_director,model_colegio_profesor,gestion_colegio.group_director,1,1,1,1
+# permisos del grupo profesor
+access_colegio_profesor_profesor,access_colegio_profesor_profesor,model_colegio_profesor,gestion_colegio.group_profesor,1,0,0,0
+\end{lstlisting}
+
+Al realizar los cambios, actualizamos el módulo.
+
+\vspace{0.3cm}
+\begin{center}
+    \includegraphics[height=4cm]{images/modulo48.png}
+\end{center}
+
+Nos dirigimos a ajustes -> administrar usuarios y más abajo vemos una sección que es la tiene los 2 roles que hemos creado, por defecto vemos que está director puesto que nos permite acceder a todo el módulo.
+
+\vspace{0.3cm}
+\begin{center}
+    \includegraphics[height=8cm]{images/modulo49.png}
+\end{center}
+
+Mientas que si cambiamos al rol de profesor, solo nos deja ver la vista de profesores.
+
+\vspace{0.3cm}
+\begin{center}
+    \includegraphics[height=6cm]{images/modulo50.png}
+\end{center}
 
 \subsection{Errores encontrados}
 Los errores siguieron siendo los mismos, errores de sintaxis por usar por ejemplo singular en vez de plural o al revés. Porque al ser la base una "copia" de los anteriores actividades era más fácil no cometer errores, solo había que tener cuidado con hacer bien las relaciones que si están definidas antes se hace más llevadero. Algún error tuve con una relación pero era porque me equivoqué y sin querer la puse al revés. 
 
 Las advertencias de Odoo o los logs del contenedor, nos va indicando los errores y nos dan pistas para ver donde nos hemos equivocado.
 
+
+\vspace{5cm}
 \section{Conclusiones}
+
+Al empezar la práctica fue bastante confuso por donde empezar y organizarse de la manera más óptima para realizar correctamente el módulo. Fue todo prueba y error en los 2 primeros ejercicios. Aunque al empezar a realizar las otras actividades se veía un patrón de como es mejor realizar el módulo y como documentarlo de la mejor mamera.
+
+Poco a poco, se hacía algo más "ameno" podía reciclar las bases de los modelos y los módulos y a la vez empezaba a ver más facilmente donde fallaba y más cuando eran errores tontos de palabras mal escritas que fue lo que más rabia me dio de la actividad. He perdido mucho tiempo por olvidarme de como había nombrado atribulos en los modelos y luego en las vistas ponía yo otra que pensaba que era esa y no lo era. 
+
+En conclusión, fue un trabajo bastante largo pero la verdad es que aprendí bastante en poco tiempo como estructurar los módulos correctamente e ir comprobando que todo funcione correctamente.
+
 
 \end{document}

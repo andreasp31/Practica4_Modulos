@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.26)  11 DEC 2025 18:38
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.26)  11 DEC 2025 19:07
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -627,8 +627,29 @@ Package pdftex.def Info: images/modulo42.png  used on input line 1766.
 
 
 [41 <./images/modulo42.png>]
+<images/modulo48.png, id=1526, 268.00125pt x 113.67468pt>
+File: images/modulo48.png Graphic file (type png)
+<use images/modulo48.png>
+Package pdftex.def Info: images/modulo48.png  used on input line 1815.
+(pdftex.def)             Requested size: 268.32773pt x 113.81102pt.
+<images/modulo49.png, id=1527, 868.74562pt x 572.89032pt>
+File: images/modulo49.png Graphic file (type png)
+<use images/modulo49.png>
+Package pdftex.def Info: images/modulo49.png  used on input line 1822.
+(pdftex.def)             Requested size: 345.17229pt x 227.62204pt.
 
-[42] (documentacion1_4.aux)
+
+[42 <./images/modulo48.png>]
+<images/modulo50.png, id=1559, 1231.60126pt x 490.08093pt>
+File: images/modulo50.png Graphic file (type png)
+<use images/modulo50.png>
+Package pdftex.def Info: images/modulo50.png  used on input line 1829.
+(pdftex.def)             Requested size: 429.0185pt x 170.71652pt.
+
+
+[43 <./images/modulo49.png> <./images/modulo50.png>]
+
+[44] (documentacion1_4.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-09-02>
@@ -637,17 +658,17 @@ Package rerunfilecheck Info: File `documentacion1_4.out' has not changed.
 (rerunfilecheck)             Checksum: B6D97D0C0204C215CBA199D24ED6CEF0;4040.
  ) 
 Here is how much of TeX's memory you used:
- 14254 strings out of 468130
- 220290 string characters out of 5430633
+ 14327 strings out of 468130
+ 221654 string characters out of 5430633
  1187656 words of memory out of 5000000
- 41501 multiletter control sequences out of 15000+600000
+ 41546 multiletter control sequences out of 15000+600000
  636225 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,7n,79p,678b,2196s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tctt1000.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1000.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0600.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk>
-Output written on documentacion1_4.pdf (42 pages, 904657 bytes).
+Output written on documentacion1_4.pdf (44 pages, 986084 bytes).
 PDF statistics:
- 2109 PDF objects out of 2487 (max. 8388607)
- 1242 named destinations out of 1440 (max. 500000)
- 366 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2158 PDF objects out of 2487 (max. 8388607)
+ 1270 named destinations out of 1440 (max. 500000)
+ 381 words of extra memory for PDF output out of 10000 (max. 10000000)
 
