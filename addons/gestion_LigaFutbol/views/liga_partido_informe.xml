@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--Tienen que estar los atributos en ingles-->
+    <record id="action_report_partido" model="ir.actions.report">
+        <field name="name">Resultado del Partido</field>
+        <field name="model">liga.partido</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">gestion_LigaFutbol.informe_partido_plantilla</field>
+        <field name="print_report_name">'Partido -- %s' % (object.equipo_casa.nombre)</field>
+        <field name="binding_model_id" ref="model_liga_partido"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="informe_partido_plantilla">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="datos">
+                        <!--Datos de los equipos -->
+                        <div class="datos2">
+                            <p>EQUIPO LOCAL</p>
+                            <p t-field="o.equipo_casa.nombre"></p>
+                        </div>
+                        <div class="datos2">
+                            <p>EQUIPO VISITANTE</p>
+                            <p t-field="o.equipo_fuera.nombre"></p>
+                        </div>
+                    </div>
+                    <!--resultado del partido con goles-->
+                    <div class="pagina">
+                        <div class="text-center" style="border-bottom: 2px solid black; margin-bottom: 20px;">
+                            <h2>ACTA DEL PARTIDO</h2>
+                        </div>
+                        
+                        <div class="row align-items-center justify-content-center" style="font-size: 20px; margin-top: 50px;">
+                            <div class="col-5 text-end"> <strong t-field="o.equipo_casa.nombre"/>
+                            </div>
+                            
+                            <div class="col-2 text-center" style="background-color: #f2f2f2; border-radius: 10px; width: 100px; padding: 10px; margin-left: 5px; margin-right: 5px;">
+                                <strong>
+                                    <span t-field="o.goles_casa"/> - <span t-field="o.goles_fuera"/>
+                                </strong>
+                            </div>
+                            
+                            <div class="col-5 text-start"> <strong t-field="o.equipo_fuera.nombre"/>
+                            </div>
+                        </div>
+                        <!--Pie de acta que sino quedaba muy vacio-->
+                        <div class="text-center" style="margin-top: 100px; color: grey;">
+                            <p>Informe generado por el Sistema de Gestión de la Liga</p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
