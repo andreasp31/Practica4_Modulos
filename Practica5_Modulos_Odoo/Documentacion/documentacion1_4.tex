@@ -404,7 +404,7 @@ Genera un pdf que se abre automáticamente con los datos del partido.
 
 \vspace{0.5cm}
 \subsection{Wizard para crear nuevos partidos}
-El objetivo de este apartado es crear un partido mediante un formulario emergente que guarda datos temporales. Para crear un Wozard hay que generar un modelo nuevo "partido wizard".
+El objetivo de este apartado es crear un partido mediante un formulario emergente que guarda datos temporales. Para crear un Wizard hay que generar un modelo nuevo "partido wizard".
 
 \vspace{0.5cm}
 \begin{lstlisting}[style=javascript]
@@ -438,42 +438,198 @@ Ahora hay que hacer una vista para que se genere el formulario anterior "partido
 
 \vspace{0.5cm}
 \begin{lstlisting}[style=javascript]
-    # -*- coding: utf-8 -*-
-    from odoo import models, fields
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="partido_wizard_vista" model="ir.ui.view">
+        <field name="name">liga.partido.wizard.form</field>
+        <field name="model">liga.partido.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Crear Nuevo Partido">
+                <group>
+                    <group>
+                        <field name="equipo_casa"/>
+                        <field name="goles_casa"/>
+                    </group>
+                    <group>
+                        <field name="equipo_fuera"/>
+                        <field name="goles_fuera"/>
+                    </group>
+                </group>
+                <group>
+                    <button name="crear_partido" string="Generar Partido" type="object" />
+                    <button string="Cancelar" special="cancel"/>
+                </group>
+            </form>
+        </field>
+    </record>
 
-    class PartidoWizard(models.TransientModel):
-        #Nombre de la tabla temporal que se va a crear
-        _name = 'liga.partido.wizard'
-        _description = 'Wizard para crear partidos'
-        #Campos del formulario 
-        equipo_casa = fields.Many2one('liga.equipo', string="Equipo Local", required=True)
-        equipo_fuera = fields.Many2one('liga.equipo', string="Equipo Visitante", required=True)
-        goles_casa = fields.Integer(string="Goles Local", default=0)
-        goles_fuera = fields.Integer(string="Goles Visitante", default=0)
+    <record id="action_partido_wizard" model="ir.actions.act_window">
+        <field name="name">Anadir Partido</field>
+        <field name="res_model">liga.partido.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field> 
+    </record>
 
-        def crear_partido(self):
-            # Esta funcion crea el registro permanente en el modelo liga.partido
-            self.env['liga.partido'].create({
-                'equipo_casa': self.equipo_casa.id,
-                'equipo_fuera': self.equipo_fuera.id,
-                'goles_casa': self.goles_casa,
-                'goles_fuera': self.goles_fuera,
-            })
-            # Recalcular la clasificacion tras poner el partido nuevo
-            self.env['liga.partido'].actualizarRegistrosEquipo()
-            return {'type': 'ir.actions.act_window_close'} # Cierra la ventana emergente 
+    <menuitem id="menu_partido_wizard" 
+              name="Wizard Crear Partido" 
+              parent="liga_base_menu" 
+              action="action_partido_wizard" 
+              sequence="50"/>
+</odoo>
 \end{lstlisting}
 
+Hay que tener en cuenta que al crear estos archivos ahora en "init" y "manifest" hay que añadir esto nuevo:
+
+En el archivo "init" de la carpeta vista: 
 \vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+    from . import partido_wizard
+\end{lstlisting}
+
+En el archivo "manifest" en data:
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+    'views/partido_wizard_vista.xml'
+\end{lstlisting}
+
+Un error que tuve fue que no me cargaba la vista y tenía que añadir los permisos al archivo "ir.model.access.csv"
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+    acl_partido_wizard_vista,liga.equipo_wizard,model_partido_wizard,,1,1,1,1
+\end{lstlisting}
+ 
+Aquí vemos que nos sale el apartado nuevo arriba en el menú que al pinchar nos abre una ventana emergente para añadir los datos del partido de forma rápida.
+
+\vspace{0.2cm}
+\begin{center}
+    \includegraphics[height=5cm]{images/futbol14.png}
+\end{center}
+
+Y ya dentro de los partidos nos sale el que he creado.
+
+\vspace{0.2cm}
+\begin{center}
+    \includegraphics[height=4.3cm]{images/futbol15.png}
+\end{center}
+
+
+\vspace{2cm}
 \subsection{Vista Graph}
+
+Para crear una gráfica me basé en la gráfica que estaba en el apartado de equipos y cambié los valores a goles y equipos locales.
+Además hay que añadir el parámetro "graph". 
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+    ...
+    <field name="view_mode">list,kanban,form,graph</field>
+    ...
+    <!-- Vista Graph  que muestra informacion de los goles locales en total-->
+    <record model="ir.ui.view" id="liga_partido_view_graph">
+        <field name="name">Goles de los equipos locales</field>
+        <field name="model">liga.partido</field>
+        <field name="type">graph</field>
+        <field name="arch" type="xml">
+            <!-- Cada fila es un equipo y la altura los goles -->
+              <graph string="Puntos por equipo">
+                <field name="equipo_casa" group="True" type="row"/>
+                <field name="goles_casa" group="True" type="measure"/>
+             </graph>
+         </field>
+     </record>
+\end{lstlisting}
+ 
+Ahora para ver la gráfica actualizamos el módulo y dentro del apartado de partidos vemos una nueva vista. Y se ve una gráfica de los equipos locales con los goles totales.
+
+\vspace{1cm}
+\begin{center}
+    \includegraphics[height=12cm]{images/futbol16.png}
+\end{center}
+
 \vspace{0.5cm}
 \subsection{Errores encontrados}
 El primer error que se tuvo en esta actividad fue al intentar abrir el módulo nos daba un error que ya tuvimos en otras prácticas que era la utilización de la etiqueta <tree> que ya no se utiliza y hay que cambiarlo por <list>. se cambió en todos los archivos de las vistas y el módulo ya se puede abrir correctamente.
 
 Otro error que sucede mucho es equivocarme al llamar con el nombre correcto funciones que creo por ejemplo me dio error en el controlador porque había llamado mal a la función de recargar. 
 
+\vspace{1cm}
+\section{Actividad 02 - Pruebas Api Rest Socios}
 
-\vspace{5cm}
+
+
+\vspace{1cm}
+\section{Actividad 03 - Bot de Telegram conectado a la Api Rest}
+
+\vspace{1cm}
+\section{Actividad 04 -  Generar de imágenes aleatorias con Web Controller}
+
+Para esta activadad nos vamos a basar en el módulo 9 del repositorio aportado. Con esa base primero vamos a instalar la librería Pillow en el entorno de Python usando el comando "python -m pip install Pillow".
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=3cm]{images/futbol17.png}
+\end{center}
+
+Ahora creamos en la carpeta "controllers" y nuevo archivo "controlador" que se encargará de generar la imagen utiliza la librerá de procesamiento de imágenes Pillow para crear una representación visual de datos aleatorios. 
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+    # -*- coding: utf-8 -*-
+    from odoo import http
+    from odoo.http import request
+    import io
+    import random
+
+    # Intentar importar Pillow de forma segura
+    try:
+        from PIL import Image
+    except ImportError:
+        Image = None
+
+    class ImagenAleatoriaController(http.Controller):
+
+        @http.route('/generar_imagen_aleatoria', type='http', auth='public', website=True)
+        def crear_imagen(self, w=200, h=200, **kwargs):
+            # Si Pillow no esta, se devuelve texto para no dar Error 500
+            if Image is None:
+                return "Error: La libreria Pillow no esta instalada en el contenedor Odoo."
+
+            try:
+                ancho = int(w)
+                alto = int(h)
+            except:
+                ancho, alto = 200, 200
+
+            # Crear la imagen aleatoria
+            img = Image.new('RGB', (ancho, alto))
+            pixeles = img.load()
+            for x in range(ancho):
+                for y in range(alto):
+                    pixeles[x, y] = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
+
+            # Guardar imagen en buffer
+            output = io.BytesIO()
+            img.save(output, format="PNG")
+            contenido = output.getvalue()
+            output.close()
+
+            # Retornar respuesta simple para evitar descargas
+            return request.make_response(contenido, [
+                ('Content-Type', 'image/png'),
+                ('Content-Disposition', 'inline')
+            ])
+\end{lstlisting}
+
+En el archivo "init" del módulo hay que importar el controler y para probarlo vamos a actualizar el módulo primero y luego con la url accedemos al generador de imagen: \href{http://localhost:8069/generar_imagen_aleatoria?w=600&h=600}{generar imagen}.
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=9cm]{images/pixel1.png}
+\end{center}
+
+
+\vspace{1cm}
 \section{Conclusiones}
 
 Al empezar la práctica fue bastante confuso por donde empezar y organizarse de la manera más óptima para realizar correctamente el módulo. Fue todo prueba y error en los 2 primeros ejercicios. Aunque al empezar a realizar las otras actividades se veía un patrón de como es mejor realizar el módulo y como documentarlo de la mejor mamera.

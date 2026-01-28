@@ -35,7 +35,8 @@
         'views/liga_partido.xml',
         #Añadimos un Wizard para introducir equipos
         'wizard/liga_equipo_wizard.xml',
-        'views/liga_partido_informe.xml'
+        'views/liga_partido_informe.xml',
+        'views/partido_wizard_vista.xml'
         
     ],
     # Fichero con data de demo si se inicializa la base de datos con "demo data" (No incluido en ejemplo)
