@@ -40,9 +40,11 @@
         <field name="model">liga.partido</field>
         <field name="arch" type="xml">
             <list>
-                <button name="sumar_goles_locales" string="+2 Goles Locales" type="object"/>
-                <button name="sumar_goles_visitantes" string="+2 Goles Visitantes" type="object"/>
-                <!-- Indicamos que atributos usaremos al hacer la vista Tree -->
+                <header>
+                    <button name="sumar_goles_locales" string="+2 Goles Locales" type="object" display="always"/>
+                    <button name="sumar_goles_visitantes" string="+2 Goles Visitantes" type="object" display="always"/>
+                </header>
+                <!-- Indicamos que atributos usaremos al hacer la vista lIst -->
                 <field name="equipo_casa" />
                 <field name="goles_casa" />
                 <field name="equipo_fuera" />
@@ -60,7 +62,10 @@
             <!-- Agrupamos por el atributo "parent_id"-->
             <kanban>
                 <!-- Indicamos que atributos usaremos al hacer la vista Kanban -->
-
+                <header>
+                    <button name="sumar_goles_locales" string="+2 Goles Locales" type="object" display="always"/>
+                    <button name="sumar_goles_visitantes" string="+2 Goles Visitantes" type="object" display="always"/>
+                </header>
                 <field name="equipo_casa" />
                 <field name="goles_casa" />
                 <field name="equipo_fuera" />
@@ -110,5 +115,4 @@
              </graph>
          </field>
      </record>
-
 </odoo>

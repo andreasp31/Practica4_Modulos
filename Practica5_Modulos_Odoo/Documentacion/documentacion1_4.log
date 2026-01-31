@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.26)  29 JAN 2026 00:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.9.26)  31 JAN 2026 21:11
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -380,51 +380,50 @@ File: lstlang1.sty 2024/09/23 1.10c listings language file
 [4 <./images/futbol3.png>]
 
 [5]
-<images/futbol7.png, id=173, 764.8575pt x 235.63031pt>
-File: images/futbol7.png Graphic file (type png)
-<use images/futbol7.png>
-Package pdftex.def Info: images/futbol7.png  used on input line 247.
-(pdftex.def)             Requested size: 443.32588pt x 136.5733pt.
-
 
 [6]
-<images/futbol8.png, id=213, 762.59906pt x 237.13594pt>
-File: images/futbol8.png Graphic file (type png)
-<use images/futbol8.png>
-Package pdftex.def Info: images/futbol8.png  used on input line 254.
-(pdftex.def)             Requested size: 439.21251pt x 136.5733pt.
+<images/futbol18.png, id=225, 1444.64719pt x 210.03468pt>
+File: images/futbol18.png Graphic file (type png)
+<use images/futbol18.png>
+Package pdftex.def Info: images/futbol18.png  used on input line 268.
+(pdftex.def)             Requested size: 450.10649pt x 65.44142pt.
+<images/futbol19.png, id=226, 814.54312pt x 247.67531pt>
+File: images/futbol19.png Graphic file (type png)
+<use images/futbol19.png>
+Package pdftex.def Info: images/futbol19.png  used on input line 275.
+(pdftex.def)             Requested size: 374.29665pt x 113.81102pt.
 
 
-[7 <./images/futbol7.png> <./images/futbol8.png>]
-<images/futbol9.png, id=239, 762.59906pt x 259.7203pt>
+[7 <./images/futbol18.png> <./images/futbol19.png>]
+<images/futbol9.png, id=258, 762.59906pt x 259.7203pt>
 File: images/futbol9.png Graphic file (type png)
 <use images/futbol9.png>
-Package pdftex.def Info: images/futbol9.png  used on input line 286.
+Package pdftex.def Info: images/futbol9.png  used on input line 307.
 (pdftex.def)             Requested size: 401.0105pt x 136.5733pt.
-<images/futbol10.png, id=240, 403.5075pt x 146.79843pt>
+<images/futbol10.png, id=259, 403.5075pt x 146.79843pt>
 File: images/futbol10.png Graphic file (type png)
 <use images/futbol10.png>
-Package pdftex.def Info: images/futbol10.png  used on input line 293.
+Package pdftex.def Info: images/futbol10.png  used on input line 314.
 (pdftex.def)             Requested size: 375.3997pt x 136.5733pt.
-<images/futbol11.png, id=241, 765.6103pt x 208.52907pt>
+<images/futbol11.png, id=260, 765.6103pt x 208.52907pt>
 File: images/futbol11.png Graphic file (type png)
 <use images/futbol11.png>
-Package pdftex.def Info: images/futbol11.png  used on input line 300.
+Package pdftex.def Info: images/futbol11.png  used on input line 321.
 (pdftex.def)             Requested size: 449.19447pt x 122.34692pt.
 
 
 [8 <./images/futbol9.png> <./images/futbol10.png> <./images/futbol11.png>]
 
 [9]
-<images/futbol13.png, id=306, 623.32875pt x 163.3603pt>
+<images/futbol13.png, id=324, 623.32875pt x 163.3603pt>
 File: images/futbol13.png Graphic file (type png)
 <use images/futbol13.png>
-Package pdftex.def Info: images/futbol13.png  used on input line 395.
+Package pdftex.def Info: images/futbol13.png  used on input line 416.
 (pdftex.def)             Requested size: 434.26321pt x 113.81102pt.
-<images/futbol12.png, id=307, 484.05844pt x 651.18282pt>
+<images/futbol12.png, id=325, 484.05844pt x 651.18282pt>
 File: images/futbol12.png Graphic file (type png)
 <use images/futbol12.png>
-Package pdftex.def Info: images/futbol12.png  used on input line 402.
+Package pdftex.def Info: images/futbol12.png  used on input line 423.
 (pdftex.def)             Requested size: 317.26372pt x 426.79134pt.
 
 
@@ -433,45 +432,58 @@ Package pdftex.def Info: images/futbol12.png  used on input line 402.
 [11 <./images/futbol12.png>]
 
 [12]
-<images/futbol14.png, id=408, 947.79094pt x 329.73187pt>
+<images/futbol14.png, id=427, 947.79094pt x 329.73187pt>
 File: images/futbol14.png Graphic file (type png)
 <use images/futbol14.png>
-Package pdftex.def Info: images/futbol14.png  used on input line 506.
+Package pdftex.def Info: images/futbol14.png  used on input line 527.
 (pdftex.def)             Requested size: 408.93053pt x 142.26378pt.
-<images/futbol15.png, id=409, 641.39626pt x 188.95593pt>
+<images/futbol15.png, id=428, 641.39626pt x 188.95593pt>
 File: images/futbol15.png Graphic file (type png)
 <use images/futbol15.png>
-Package pdftex.def Info: images/futbol15.png  used on input line 513.
+Package pdftex.def Info: images/futbol15.png  used on input line 534.
 (pdftex.def)             Requested size: 415.29758pt x 122.34692pt.
 
 
 [13 <./images/futbol14.png> <./images/futbol15.png>]
-<images/futbol16.png, id=423, 651.93562pt x 665.48625pt>
+<images/futbol16.png, id=442, 651.93562pt x 665.48625pt>
 File: images/futbol16.png Graphic file (type png)
 <use images/futbol16.png>
-Package pdftex.def Info: images/futbol16.png  used on input line 547.
+Package pdftex.def Info: images/futbol16.png  used on input line 568.
 (pdftex.def)             Requested size: 334.48225pt x 341.43306pt.
 
 
 [14 <./images/futbol16.png>]
-<images/futbol17.png, id=446, 660.96938pt x 133.24782pt>
+<images/actividad2.png, id=466, 1015.54407pt x 614.295pt>
+File: images/actividad2.png Graphic file (type png)
+<use images/actividad2.png>
+Package pdftex.def Info: images/actividad2.png  used on input line 584.
+(pdftex.def)             Requested size: 423.33344pt x 256.0748pt.
+<images/bot1.png, id=467, 402.75468pt x 155.07938pt>
+File: images/bot1.png Graphic file (type png)
+<use images/bot1.png>
+Package pdftex.def Info: images/bot1.png  used on input line 594.
+(pdftex.def)             Requested size: 369.46948pt x 142.26378pt.
+
+
+[15 <./images/actividad2.png>]
+<images/futbol17.png, id=473, 660.96938pt x 133.24782pt>
 File: images/futbol17.png Graphic file (type png)
 <use images/futbol17.png>
-Package pdftex.def Info: images/futbol17.png  used on input line 571.
+Package pdftex.def Info: images/futbol17.png  used on input line 605.
 (pdftex.def)             Requested size: 423.42238pt x 85.35826pt.
 
 
-[15 <./images/futbol17.png>]
-<images/pixel1.png, id=462, 495.35063pt x 535.2497pt>
+[16 <./images/bot1.png> <./images/futbol17.png>]
+<images/pixel1.png, id=500, 495.35063pt x 535.2497pt>
 File: images/pixel1.png Graphic file (type png)
 <use images/pixel1.png>
-Package pdftex.def Info: images/pixel1.png  used on input line 628.
+Package pdftex.def Info: images/pixel1.png  used on input line 662.
 (pdftex.def)             Requested size: 236.99464pt x 256.0748pt.
 
 
-[16]
+[17 <./images/pixel1.png>]
 
-[17 <./images/pixel1.png>] (documentacion1_4.aux)
+[18] (documentacion1_4.aux)
  ***********
 LaTeX2e <2025-06-01> patch level 1
 L3 programming layer <2025-09-02>
@@ -480,17 +492,17 @@ Package rerunfilecheck Info: File `documentacion1_4.out' has not changed.
 (rerunfilecheck)             Checksum: 9AFF78B93AF6F2C9D88F1E15686C8635;2982.
  ) 
 Here is how much of TeX's memory you used:
- 13082 strings out of 468130
- 200864 string characters out of 5430633
- 1218573 words of memory out of 5000000
- 41205 multiletter control sequences out of 15000+600000
+ 13123 strings out of 468130
+ 201593 string characters out of 5430633
+ 1228573 words of memory out of 5000000
+ 41226 multiletter control sequences out of 15000+600000
  635449 words of font info for 56 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  69i,7n,79p,681b,2172s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tctt1000.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1000.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0600.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1200.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1728.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\andre\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk>
-Output written on documentacion1_4.pdf (17 pages, 1515346 bytes).
+Output written on documentacion1_4.pdf (18 pages, 1704396 bytes).
 PDF statistics:
- 905 PDF objects out of 1000 (max. 8388607)
- 367 named destinations out of 1000 (max. 500000)
- 188 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 940 PDF objects out of 1000 (max. 8388607)
+ 387 named destinations out of 1000 (max. 500000)
+ 198 words of extra memory for PDF output out of 10000 (max. 10000000)
 

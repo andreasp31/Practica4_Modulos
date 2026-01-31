@@ -218,7 +218,7 @@ Lo primero es en el archivo "liga partido.py" añadimos las funciones que harán
 \end{lstlisting}
 
 Lo complicado era crear los botones en la vista, porque en la vista Kanban los botones se añadían dentro de la tarjeta y tenía que modificar todos los equipos. 
-Luego quise hacer un menú arriba en el archivo de la vista de "liga partido" bueno un header pero esa etiqueta funciona con "tree" y no con "list" así que la única manera que encontré es añadir los botones a la lista de los partidos, cumplen su función pero no es que sea lo más estético.
+La manera de solucionarlo para que los botones aparezca arriba en ambas vistas es meterlo dentro de la etiqueta "header" que en lista no funciona a no ser que se le añada display="always".
 
 \vspace{0.5cm}
 \begin{lstlisting}[style=javascript]
@@ -228,9 +228,11 @@ Luego quise hacer un menú arriba en el archivo de la vista de "liga partido" bu
         <field name="model">liga.partido</field>
         <field name="arch" type="xml">
             <list>
-                <button name="sumar_goles_locales" string="+2 Goles Locales" type="object"/>
-                <button name="sumar_goles_visitantes" string="+2 Goles Visitantes" type="object"/>
-                <!-- Indicamos que atributos usaremos al hacer la vista Tree -->
+                <header>
+                    <button name="sumar_goles_locales" string="+2 Goles Locales" type="object" display="always"/>
+                    <button name="sumar_goles_visitantes" string="+2 Goles Visitantes" type="object" display="always"/>
+                </header>
+                <!-- Indicamos que atributos usaremos al hacer la vista List -->
                 <field name="equipo_casa" />
                 <field name="goles_casa" />
                 <field name="equipo_fuera" />
@@ -238,20 +240,39 @@ Luego quise hacer un menú arriba en el archivo de la vista de "liga partido" bu
             </list>
         </field>
     </record>
+    <!-- Y lo mismo en la vista kanban -->
+    <record id="liga_partido_view_kanban" model="ir.ui.view">
+        <field name="name">Lista de partidos de la liga</field>
+        <field name="model">liga.partido</field>
+        <field name="arch" type="xml">
+            <!-- Agrupamos por el atributo "parent_id"-->
+            <kanban>
+                <!-- Indicamos que atributos usaremos al hacer la vista Kanban -->
+                <header>
+                    <button name="sumar_goles_locales" string="+2 Goles Locales" type="object" display="always"/>
+                    <button name="sumar_goles_visitantes" string="+2 Goles Visitantes" type="object" display="always"/>
+                </header>
+                <field name="equipo_casa" />
+                <field name="goles_casa" />
+                <field name="equipo_fuera" />
+                <field name="goles_fuera" />
+                ...
+
+
 \end{lstlisting}
 
-Por lo que visualmente quedaría así los botones de sumar goles
+Por lo que visualmente quedaría así los botones de sumar goles:
 
 \vspace{0.2cm}
 \begin{center}
-    \includegraphics[height=4.8cm]{images/futbol7.png}
+    \includegraphics[height=2.3cm]{images/futbol18.png}
 \end{center}
 
 Así quedaría si sumamos 2 goles a los equipos locales y dos a los visitantes.
 
 \vspace{0.2cm}
 \begin{center}
-    \includegraphics[height=4.8cm]{images/futbol8.png}
+    \includegraphics[height=4cm]{images/futbol19.png}
 \end{center}
 
 \vspace{0.5cm}
@@ -556,10 +577,23 @@ Otro error que sucede mucho es equivocarme al llamar con el nombre correcto func
 \vspace{1cm}
 \section{Actividad 02 - Pruebas Api Rest Socios}
 
+La actividad 2 consiste en realizar las 4 operaciones básicas (crear, modificar, listar y eliminar) usando en mi caso Thunder Client y ser capaz de ver los resultados en Odoo. La pruebas realizadas se encuentran en este vídeo de youtube \href{https://youtu.be/wQ1JUA7Oems}{pinchar aquí}.
 
+\vspace{1cm}
+\begin{center}
+    \includegraphics[height=9cm]{images/actividad2.png}
+\end{center}
 
 \vspace{1cm}
 \section{Actividad 03 - Bot de Telegram conectado a la Api Rest}
+
+En esta actividad vamos a crear primero un bot de Telegram que se va a configurar con BotFather. 
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=5cm]{images/bot1.png}
+\end{center}
+
 
 \vspace{1cm}
 \section{Actividad 04 -  Generar de imágenes aleatorias con Web Controller}
