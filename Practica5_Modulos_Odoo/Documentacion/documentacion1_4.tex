@@ -60,25 +60,25 @@
     \item Vista Graph
     \item Errores encontrados
     \end{itemize}
-    \item Actividad 02 - Pruebas Api Rest Socios ................................................... página 8
+    \item Actividad 02 - Pruebas Api Rest Socios ................................................... página 15
     \begin{itemize}
     \item Probar crear, modificar, consultar y eliminar
     \item Utilizar una herramienta como: (Postman, Thunder Client)
     \item Errores Encontrados
     \end{itemize}
-    \item Actividad 03 - Bot de Telegram conectado a la Api Rest ......................... página 18
+    \item Actividad 03 - Bot de Telegram conectado a la Api Rest ......................... página 16
     \begin{itemize}
     \item Crear bot de Telegram configurando con BotFather
     \item Escuchar órdenes enviados por los usuarios
     \item El bot tiene que soportar el bot
     \item Errores encontrados 
     \end{itemize}
-    \item Actividad 04 -  Generar de imágenes aleatorias con Web Controller ......... página 28
+    \item Actividad 04 -  Generar de imágenes aleatorias con Web Controller ......... página 21
     \begin{itemize}
     \item Crear un Web Controller
     \item Errores encontrados 
     \end{itemize}
-    \item Conclusiones ............................................................................................. página 44
+    \item Conclusiones ............................................................................................. página 23
 \end{enumerate}
 \newpage
 
@@ -579,6 +579,8 @@ Otro error que sucede mucho es equivocarme al llamar con el nombre correcto func
 
 La actividad 2 consiste en realizar las 4 operaciones básicas (crear, modificar, listar y eliminar) usando en mi caso Thunder Client y ser capaz de ver los resultados en Odoo. La pruebas realizadas se encuentran en este vídeo de youtube \href{https://youtu.be/wQ1JUA7Oems}{pinchar aquí}.
 
+Si el enlace no funciona, el video está adjunto en el repositorio del github.
+
 \vspace{1cm}
 \begin{center}
     \includegraphics[height=9cm]{images/actividad2.png}
@@ -592,6 +594,159 @@ En esta actividad vamos a crear primero un bot de Telegram que se va a configura
 \vspace{0.5cm}
 \begin{center}
     \includegraphics[height=5cm]{images/bot1.png}
+\end{center}
+
+Ahora vamos a crear un bot para esta actividad, poniendo el comando "/newbot". Y le damos un nombre al bot y al usuario que tiene que acabar en "bot". El BotFather nos da un Token que lo vamos a tener que usar en el script de Python. 
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=11cm]{images/actividad3.png}
+\end{center}
+
+Tras tener el bot tenemos que instalar las herramientas que permitan hablar al bot con Telegram y con Odoo. Abrimos una terminal e instalamos las dependencias necesarias: "python -m pip install python-telegram-bot requests"
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=8cm]{images/actividad31.png}
+\end{center}
+
+Ahora hay que crear un archivo de python fuera de las carpetas de los módulos porque el Bot de Telegram es una aplicación independiente, este bot le va a pedir cosas a Odoo y si está dentro e algún módulo, Odoo intentará cargarlo como si fuera parte del sistema y dará errores.
+
+En el archivos tenemos que escribir esto, porque el ejercicio nos pude que el bot soporte cuatro ordenes básicas (crear,modificar,consultar y eliminar) y si no es ninguna que nos devuelva una respuesta de orden no soportada. 
+
+\vspace{0.5cm}
+\begin{lstlisting}[style=javascript]
+    import requests
+from telegram import Update
+from telegram.ext import ApplicationBuilder, MessageHandler, filters
+
+# configuracion
+TOKEN = '8015889789:AAFCr7XlIZwv2hPzWNobqKH8ScA10LdoQh4'
+URL = 'http://localhost:8069/gestion/apirest/socio'
+
+async def manejar_mensaje(update: Update, context):
+    # Cogemos el texto y lo separamos por comas (la orden, nombre, apellidos, numero)
+    texto = update.message.text
+    partes = [parte.strip() for parte in texto.split(',')]
+    orden = partes[0] # esta es la orden
+
+    try:
+        # si la orden es igual a crear
+        if orden == "Crear":
+            # pasamos los datos (nombre, apellidos, numero socio)
+            datos = {"nombre": partes[1], "apellidos": partes[2], "num_socio": partes[3]}
+            # Envia la informacion a la url
+            r = requests.post(URL, json=datos)
+            # Nos devuelve el contenido del mensaje, el f"" se usa para crear frase combinando texto normal con variables
+            respuesta = f"Socio creado: {r.text}"
+
+        # si la orden es igual a consultar
+        elif orden == "Consultar":
+            # los datos ( orden y el numero de socio)
+            params = {"data": '{"num_socio": "' + partes[1] + '"}'}
+            # Envia la informacion a la url
+            r = requests.get(URL, params=params)
+            # Nos devuelve el contenido del mensaje
+            respuesta = f"Datos: {r.text}"
+
+        # si la orden es igual a borrar
+        elif orden == "Borrar":
+            # datos (orden y numero de socio)
+            params = {"data": '{"num_socio": "' + partes[1] + '"}'}
+            # Envia la informacion a la url
+            r = requests.delete(URL, params=params)
+            # Nos devuelve el contenido del mensaje
+            respuesta = f"Borrado: {r.text}"
+        # si la orden es igual a modificar
+        elif orden == "Modificar":
+            # datos(orden,nombre,apellidos,numero de socio)
+            datos = {"nombre": partes[1], "apellidos": partes[2], "num_socio": partes[3]}
+            # Envia la informacion a la url
+            r = requests.put(URL, json=datos)
+            # Nos devuelve el contenido del mensaje
+            respuesta = f"Socio modificado: {r.text}"
+        else:
+            # Si no es ninguna de las ordenes devuelve el mensaje
+            respuesta = "Orden no soportada"
+
+    except Exception as error:
+        respuesta = f"Error, igual faltan comas ({error})"
+
+    # ordena al bor enviar un mensake de vuelta al chat de telegram
+    await update.message.reply_text(respuesta)
+
+# arrancar Bot, usa el token para conectarse al servidor de telegram
+app = ApplicationBuilder().token(TOKEN).build()
+# tiene que estar atento a los mensajes y que solo quiere texto y llamamos a la funcion
+app.add_handler(MessageHandler(filters.TEXT, manejar_mensaje))
+print("Bot funcionando...")
+# el bot se queda escuchando constantemente
+app.run_polling()
+\end{lstlisting}
+
+Para comprobar que funciona correctamente, abrimos la terminal y ejecutamos: "python bot socios.py". Si funciona nos sale lo siguiente:
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=2cm]{images/actividad32.png}
+\end{center}
+
+Ahora vamos a telegram, al bot creado y vamos a probar a crear un nuevo socio. Insertamos los datos y nos devuelve un mensaje:
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=4cm]{images/actividad33.png}
+\end{center}
+
+Y comprobamos que en Odoo actualizando que se ha creado correctamente. 
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=5cm]{images/actividad34.png}
+\end{center}
+
+Vemos que esta operación funciona correctamente, vamos a comprobar que las otras 2 funcionan bien:
+
+- Consultar: a través del número de socio podemos ver los datos del socio que hemos creado anteriormente.
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=4cm]{images/actividad35.png}
+\end{center}
+
+- Modificar: vamos a cambiar los apellidos de orden:
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=4cm]{images/actividad36.png}
+\end{center}
+
+    Actualizamos en Odoo y vemos que los apellidos se han cambiado.
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=6cm]{images/actividad37.png}
+\end{center}
+
+- Borrar: con la orden y el número de socio podemos borrar un socio, y he borrado el que he creado antes.
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=4cm]{images/actividad38.png}
+\end{center}
+
+Actualizamos Odoo y vemos que ya no existe ese socio.
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=4.5cm]{images/actividad39.png}
+\end{center}
+
+Sí le decimos al bot cualquiera cosa que no sea una de esas órdenes nos devuelve este mensaje: 
+
+\vspace{0.5cm}
+\begin{center}
+    \includegraphics[height=2cm]{images/actividad40.png}
 \end{center}
 
 
@@ -663,12 +818,12 @@ En el archivo "init" del módulo hay que importar el controler y para probarlo v
 \end{center}
 
 
-\vspace{1cm}
+\vspace{8cm}
 \section{Conclusiones}
 
-Al empezar la práctica fue bastante confuso por donde empezar y organizarse de la manera más óptima para realizar correctamente el módulo. Fue todo prueba y error en los 2 primeros ejercicios. Aunque al empezar a realizar las otras actividades se veía un patrón de como es mejor realizar el módulo y como documentarlo de la mejor mamera.
+Al empezar la práctica parecía bastante compleja, pedía cosas completamente diferente a lo que estábamos acostumbrados, al ir haciendo las actividades vi que la prinmera fue la que más tardé entonces las demás se me hicieron más amenas. Fue interesante ver como se configuraba el Bot de Telegram para que comunique con Odoo, era algo confuso el tema de como tratar los datos, pero como se trataba de las operaciones básicas era fácil de entender.
 
-Poco a poco, se hacía algo más "ameno" podía reciclar las bases de los modelos y los módulos y a la vez empezaba a ver más facilmente donde fallaba y más cuando eran errores tontos de palabras mal escritas que fue lo que más rabia me dio de la actividad. He perdido mucho tiempo por olvidarme de como había nombrado atribulos en los modelos y luego en las vistas ponía yo otra que pensaba que era esa y no lo era. 
+Tuve suerte de que no tuve muchos errores, y la mayoría eran por ir a prisas escribiendo y confundía los nombres de los archivos. 
 
 En conclusión, fue un trabajo bastante largo pero la verdad es que aprendí bastante en poco tiempo como estructurar los módulos correctamente e ir comprobando que todo funcione correctamente.
 
